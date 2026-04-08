@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {useNavigate, useSearchParams} from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { fetchProperties, setFilters, setPagination } from '@/store/slices/propertySlice';
 import { fetchPropertyTypes } from '@/store/slices/propertyTypeSlice';
@@ -778,14 +778,14 @@ export default function PropertiesPage() {
                                 <div className="flex items-center gap-1 bg-white rounded-md p-0.5 border border-neutral-300">
                                     <button
                                         onClick={() => handleViewModeChange('grid')}
-                                        className={`p-2 rounded ${viewMode === 'grid' ? 'bg-primary-500 text-white' : 'text-third-500 hover:bg-neutral-100'}`}
+                                        className={`p-2 rounded-s ${viewMode === 'grid' ? 'bg-primary-500 text-white' : 'text-third-500 hover:bg-neutral-100'}`}
                                         title={t('view.grid', 'Grid View')}
                                     >
                                         <FiGrid className="w-4 h-4" />
                                     </button>
                                     <button
                                         onClick={() => handleViewModeChange('list')}
-                                        className={`p-2 rounded ${viewMode === 'list' ? 'bg-primary-500 text-white' : 'text-third-500 hover:bg-neutral-100'}`}
+                                        className={`p-2 rounded-e ${viewMode === 'list' ? 'bg-primary-500 text-white' : 'text-third-500 hover:bg-neutral-100'}`}
                                         title={t('view.list', 'List View')}
                                     >
                                         <FiList className="w-4 h-4" />

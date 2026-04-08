@@ -4,13 +4,20 @@ import { initReactI18next } from 'react-i18next';
 import translationEN from '../locales/en.json';
 import translationAR from '../locales/ar.json';
 
-// Get the initial language from localStorage or default to 'en'
-// Note: This will be managed by useLocalStorage in I18nProvider
-const getDefaultLanguage = () => {
+const getLanguageFromUrl = () => {
     if (typeof window !== 'undefined') {
+        const path = window.location.pathname;
+        const match = path.match(/^\/(ar|en)(\/|$)/);
+        if (match) {
+            return match[1];
+        }
         return localStorage.getItem('language') || 'en';
     }
     return 'en';
+};
+
+const getDefaultLanguage = () => {
+    return getLanguageFromUrl();
 };
 
 const getInitialDir = () => {
@@ -19,8 +26,9 @@ const getInitialDir = () => {
 };
 
 if (typeof window !== 'undefined') {
-    document.documentElement.dir = getInitialDir();
-    document.documentElement.lang = getDefaultLanguage();
+    const lang = getLanguageFromUrl();
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.lang = lang;
 }
 
 const resources = {
@@ -45,12 +53,19 @@ i18n
 
         interpolation: {
             escapeValue: false
+        },
+
+        detection: {
+            order: ['path', 'localStorage'],
+            lookupFromPath: 'lang',
+            caches: ['localStorage']
         }
     });
 
 i18n.on('languageChanged', (lng) => {
     document.documentElement.dir = lng === 'ar' ? 'rtl' : 'ltr';
     document.documentElement.lang = lng;
+    localStorage.setItem('language', lng);
 });
 
 export default i18n;

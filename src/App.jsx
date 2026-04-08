@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate, Outlet, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from '@/store/store';
 import { Toaster } from 'react-hot-toast';
 import '@/utils/i18n';
 import { LanguageLoadingProvider } from '@/components/common/LanguageLoadingOverlay';
+import { useTranslation } from 'react-i18next';
 
 // Layouts
 import MainLayout from '@/layouts/MainLayout';

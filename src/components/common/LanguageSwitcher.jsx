@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { FiGlobe, FiCheck, FiChevronDown } from 'react-icons/fi';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { setLanguage } from '@/store/slices/languageSlice';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export const LanguageSwitcher = ({
     buttonClassName = '',
@@ -16,13 +17,25 @@ export const LanguageSwitcher = ({
     const { currentLang } = useAppSelector((state) => state.language);
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
+    const isInitialized = useRef(false);
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const languages = [
         { code: 'en', name: 'English', flag: '🇺🇸' },
         { code: 'ar', name: 'العربية', flag: '🇸🇦' }
     ];
 
-    const currentLanguage = languages.find(lang => lang.code === currentLang) || languages[0];
+    useEffect(() => {
+        if (!isInitialized.current) {
+            isInitialized.current = true;
+            if (i18n.language && i18n.language !== currentLang) {
+                dispatch(setLanguage(i18n.language));
+            }
+        }
+    }, [i18n.language, currentLang, dispatch]);
+
+    const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -38,6 +51,12 @@ export const LanguageSwitcher = ({
     const handleLanguageChange = (langCode) => {
         dispatch(setLanguage(langCode));
         i18n.changeLanguage(langCode);
+        
+        const currentPath = location.pathname;
+        const pathWithoutLang = currentPath.replace(/^\/(ar|en)/, '') || '/';
+        const newPath = `/${langCode}${pathWithoutLang === '/' ? '' : pathWithoutLang}`;
+        navigate(newPath);
+        
         setIsOpen(false);
     };
 
@@ -126,7 +145,7 @@ export const LanguageSwitcher = ({
                         <button
                             key={language.code}
                             onClick={() => handleLanguageChange(language.code)}
-                            className={`w-full flex items-center justify-between px-4 py-2.5 text-sm transition-colors ${getDropdownItemStyles(currentLang === language.code)}`}
+                            className={`w-full flex items-center justify-between px-4 py-2.5 text-sm transition-colors ${getDropdownItemStyles(i18n.language === language.code)}`}
                         >
                             <div className="flex items-center gap-3">
                                 {showFlag && (
@@ -134,7 +153,7 @@ export const LanguageSwitcher = ({
                                 )}
                                 <span>{language.name}</span>
                             </div>
-                            {currentLang === language.code && (
+                            {i18n.language === language.code && (
                                 <FiCheck className="w-4 h-4" />
                             )}
                         </button>
@@ -157,13 +176,15 @@ export const SimpleLanguageSwitcher = ({
     const { currentLang } = useAppSelector((state) => state.language);
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const languages = [
         { code: 'en', name: 'English', flag: '🇺🇸' },
         { code: 'ar', name: 'العربية', flag: '🇸🇦' }
     ];
 
-    const currentLanguage = languages.find(lang => lang.code === currentLang) || languages[0];
+    const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -179,6 +200,12 @@ export const SimpleLanguageSwitcher = ({
     const handleLanguageChange = (langCode) => {
         dispatch(setLanguage(langCode));
         i18n.changeLanguage(langCode);
+        
+        const currentPath = location.pathname;
+        const pathWithoutLang = currentPath.replace(/^\/(ar|en)/, '') || '/';
+        const newPath = `/${langCode}${pathWithoutLang === '/' ? '' : pathWithoutLang}`;
+        navigate(newPath);
+        
         setIsOpen(false);
     };
 
@@ -202,13 +229,13 @@ export const SimpleLanguageSwitcher = ({
                         <button
                             key={language.code}
                             onClick={() => handleLanguageChange(language.code)}
-                            className={`w-full flex items-center justify-between px-4 py-2.5 text-sm transition-colors ${dropdownItemClassName} ${currentLang === language.code ? activeItemClassName : ''}`}
+                            className={`w-full flex items-center justify-between px-4 py-2.5 text-sm transition-colors ${dropdownItemClassName} ${i18n.language === language.code ? activeItemClassName : ''}`}
                         >
                             <div className="flex items-center gap-3">
                                 <span className="text-xl">{language.flag}</span>
                                 <span>{language.name}</span>
                             </div>
-                            {currentLang === language.code && (
+                            {i18n.language === language.code && (
                                 <FiCheck className="w-4 h-4" />
                             )}
                         </button>
