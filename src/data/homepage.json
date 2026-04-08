@@ -1,0 +1,375 @@
+{
+    "_id": "507f1f77bcf86cd799439011",
+    "heroSection": {
+        "title": {
+            "ar": "اكتشف منزل أحلامك",
+            "en": "Discover Your Dream Home"
+        },
+        "subtitle": {
+            "ar": "في أرقى المواقع",
+            "en": "In Prime Locations"
+        },
+        "description": {
+            "ar": "نساعدك في العثور على العقار المثالي الذي يناسب احتياجاتك وميزانيتك. خبرة تمتد لأكثر من 15 عاماً في سوق العقارات المصري",
+            "en": "We help you find the perfect property that suits your needs and budget. Over 15 years of experience in the Egyptian real estate market"
+        },
+        "backgroundImage": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2000",
+        "ctaText": {
+            "ar": "تصفح العقارات",
+            "en": "Browse Properties"
+        },
+        "ctaLink": "/properties",
+        "secondaryCtaText": {
+            "ar": "احجز استشارة مجانية",
+            "en": "Book Free Consultation"
+        },
+        "secondaryCtaLink": "/contact",
+        "videoUrl": "https://www.youtube.com/watch?v=example",
+        "videoUrlActive": true
+    },
+    "featuredProperties": [
+        {
+            "propertyId": "507f1f77bcf86cd799439012",
+            "featuredOrder": 1,
+            "customTitle": {
+                "ar": "فيلا فاخرة في التجمع الخامس",
+                "en": "Luxury Villa in Fifth Settlement"
+            },
+            "customDescription": {
+                "ar": "فيلا مستقلة بتشطيب سوبر لوكس، 5 غرف نوم، حديقة خاصة ومسبح",
+                "en": "Standalone villa with super lux finishing, 5 bedrooms, private garden and pool"
+            },
+            "isActive": true
+        },
+        {
+            "propertyId": "507f1f77bcf86cd799439013",
+            "featuredOrder": 2,
+            "customTitle": {
+                "ar": "شقة بنتهاوس في الشيخ زايد",
+                "en": "Penthouse in Sheikh Zayed"
+            },
+            "customDescription": {
+                "ar": "بنتهاوس 300 متر بإطلالة بانورامية، 4 غرف نوم، 2 تراس",
+                "en": "300 sqm penthouse with panoramic view, 4 bedrooms, 2 terraces"
+            },
+            "isActive": true
+        },
+        {
+            "propertyId": "507f1f77bcf86cd799439014",
+            "featuredOrder": 3,
+            "customTitle": {
+                "ar": "شاليه في الساحل الشمالي",
+                "en": "Chalet in North Coast"
+            },
+            "customDescription": {
+                "ar": "شاليه على البحر مباشرة، 3 غرف نوم، تشطيب فندقي",
+                "en": "Beachfront chalet, 3 bedrooms, hotel-style finishing"
+            },
+            "isActive": true
+        },
+        {
+            "propertyId": "507f1f77bcf86cd799439015",
+            "featuredOrder": 4,
+            "customTitle": {
+                "ar": "شقة في مدينة نصر",
+                "en": "Apartment in Nasr City"
+            },
+            "customDescription": {
+                "ar": "شقة 180 متر، 3 غرف نوم، موقع متميز بجوار سيتي ستارز",
+                "en": "180 sqm apartment, 3 bedrooms, prime location near City Stars"
+            },
+            "isActive": true
+        },
+        {
+            "propertyId": "507f1f77bcf86cd799439016",
+            "featuredOrder": 5,
+            "customTitle": {
+                "ar": "تاون هاوس في أكتوبر",
+                "en": "Townhouse in October"
+            },
+            "customDescription": {
+                "ar": "تاون هاوس في كمبوند راقي، 4 غرف نوم، حديقة خاصة",
+                "en": "Townhouse in upscale compound, 4 bedrooms, private garden"
+            },
+            "isActive": true
+        },
+        {
+            "propertyId": "507f1f77bcf86cd799439017",
+            "featuredOrder": 6,
+            "customTitle": {
+                "ar": "استوديو في المعادي",
+                "en": "Studio in Maadi"
+            },
+            "customDescription": {
+                "ar": "استوديو مفروش بالكامل، مساحة 60 متر، إطلالة على النيل",
+                "en": "Fully furnished studio, 60 sqm, Nile view"
+            },
+            "isActive": true
+        }
+    ],
+    "testimonials": [
+        {
+            "name": "أحمد محمود",
+            "comment": "تجربة رائعة في التعامل مع الشركة. ساعدوني في إيجاد الشقة المثالية في وقت قياسي. الخدمة احترافية جداً والموظفون متعاونون للغاية. أنصح بالتعامل معهم بشدة",
+            "location": "القاهرة، مصر",
+            "rating": 5,
+            "date": "2024-12-15T00:00:00.000Z"
+        },
+        {
+            "name": "Sarah Williams",
+            "comment": "Outstanding service! Found my dream apartment in just 2 weeks. The team was professional, responsive, and went above and beyond. Highly recommend for anyone looking for property in Cairo",
+            "location": "New Cairo, Egypt",
+            "rating": 5,
+            "date": "2024-12-10T00:00:00.000Z"
+        },
+        {
+            "name": "محمد علي",
+            "comment": "أفضل شركة عقارية تعاملت معها. الصدق والشفافية في التعامل شيء نادر هذه الأيام. وجدت فيلا أحلامي بفضل مجهوداتهم المتميزة",
+            "location": "التجمع الخامس، مصر",
+            "rating": 5,
+            "date": "2024-12-05T00:00:00.000Z"
+        },
+        {
+            "name": "Fatima Hassan",
+            "comment": "Excellent experience from start to finish. The agent was knowledgeable about the market and helped me negotiate a great deal. Very satisfied with my purchase",
+            "location": "6th of October City, Egypt",
+            "rating": 5,
+            "date": "2024-11-28T00:00:00.000Z"
+        },
+        {
+            "name": "عمر السيد",
+            "comment": "خدمة ممتازة وسريعة. الفريق محترف ويفهم احتياجات العميل جيداً. تم إنهاء كل الإجراءات بسلاسة تامة",
+            "location": "الإسكندرية، مصر",
+            "rating": 5,
+            "date": "2024-11-20T00:00:00.000Z"
+        }
+    ],
+    "statistics": {
+        "propertiesSold": 1250,
+        "propertiesRented": 850,
+        "happyClients": 2100,
+        "citiesCovered": 12,
+        "satisfactionRate": 98,
+        "yearsExperience": 15,
+        "initYear": 2009
+    },
+    "aboutSection": {
+        "title": {
+            "ar": "من نحن",
+            "en": "About Us"
+        },
+        "description": {
+            "ar": "نحن شركة رائدة في مجال العقارات بمصر، نقدم خدمات متكاملة في بيع وشراء وتأجير العقارات. نفخر بخبرتنا الممتدة لأكثر من 15 عاماً في السوق المصري",
+            "en": "We are a leading real estate company in Egypt, providing comprehensive services in buying, selling, and renting properties. We pride ourselves on over 15 years of experience in the Egyptian market"
+        },
+        "image": "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1200",
+        "ctaText": {
+            "ar": "اعرف المزيد عنا",
+            "en": "Learn More About Us"
+        },
+        "ctaLink": "/about",
+        "ourStory": {
+            "ar": "بدأنا رحلتنا في عام 2009 بهدف تغيير مفهوم الخدمات العقارية في مصر. اليوم، نفخر بأننا ساعدنا آلاف العائلات في العثور على منازل أحلامهم",
+            "en": "We started our journey in 2009 with the goal of changing the concept of real estate services in Egypt. Today, we are proud to have helped thousands of families find their dream homes"
+        },
+        "ourMission": {
+            "ar": "مهمتنا هي تقديم أفضل الحلول العقارية لعملائنا من خلال الشفافية، الاحترافية، والخدمة المتميزة",
+            "en": "Our mission is to provide the best real estate solutions to our clients through transparency, professionalism, and exceptional service"
+        },
+        "ourValues": [
+            {
+                "title": {
+                    "ar": "الشفافية",
+                    "en": "Transparency"
+                },
+                "description": {
+                    "ar": "نؤمن بالصدق والوضوح في كل تعاملاتنا",
+                    "en": "We believe in honesty and clarity in all our dealings"
+                },
+                "icon": "🔍"
+            },
+            {
+                "title": {
+                    "ar": "الاحترافية",
+                    "en": "Professionalism"
+                },
+                "description": {
+                    "ar": "فريق عمل مدرب على أعلى مستوى",
+                    "en": "Team trained to the highest standards"
+                },
+                "icon": "⭐"
+            },
+            {
+                "title": {
+                    "ar": "الابتكار",
+                    "en": "Innovation"
+                },
+                "description": {
+                    "ar": "نستخدم أحدث التقنيات لخدمة عملائنا",
+                    "en": "We use the latest technology to serve our clients"
+                },
+                "icon": "💡"
+            },
+            {
+                "title": {
+                    "ar": "رضا العملاء",
+                    "en": "Customer Satisfaction"
+                },
+                "description": {
+                    "ar": "أولويتنا الأولى هي سعادة عملائنا",
+                    "en": "Our top priority is our customers' happiness"
+                },
+                "icon": "😊"
+            }
+        ]
+    },
+    "servicesSection": {
+        "title": {
+            "ar": "خدماتنا",
+            "en": "Our Services"
+        },
+        "subtitle": {
+            "ar": "نقدم مجموعة شاملة من الخدمات العقارية لتلبية جميع احتياجاتك",
+            "en": "We offer a comprehensive range of real estate services to meet all your needs"
+        },
+        "services": [
+            {
+                "title": {
+                    "ar": "بيع العقارات",
+                    "en": "Property Sales"
+                },
+                "description": {
+                    "ar": "نساعدك في بيع عقارك بأفضل سعر في السوق من خلال استراتيجيات تسويقية مبتكرة",
+                    "en": "We help you sell your property at the best market price through innovative marketing strategies"
+                },
+                "icon": "🏠"
+            },
+            {
+                "title": {
+                    "ar": "شراء العقارات",
+                    "en": "Property Purchase"
+                },
+                "description": {
+                    "ar": "نوفر لك أفضل العقارات المتاحة التي تناسب ميزانيتك واحتياجاتك الخاصة",
+                    "en": "We provide you with the best available properties that suit your budget and specific needs"
+                },
+                "icon": "🔑"
+            },
+            {
+                "title": {
+                    "ar": "تأجير العقارات",
+                    "en": "Property Rental"
+                },
+                "description": {
+                    "ar": "خدمات تأجير شاملة سواء كنت مالكاً أو مستأجراً، نتولى كل التفاصيل",
+                    "en": "Comprehensive rental services whether you are an owner or tenant, we handle all the details"
+                },
+                "icon": "📋"
+            },
+            {
+                "title": {
+                    "ar": "إدارة الممتلكات",
+                    "en": "Property Management"
+                },
+                "description": {
+                    "ar": "إدارة احترافية لممتلكاتك العقارية بما في ذلك الصيانة والتحصيل",
+                    "en": "Professional management of your real estate including maintenance and collection"
+                },
+                "icon": "⚙️"
+            },
+            {
+                "title": {
+                    "ar": "الاستشارات العقارية",
+                    "en": "Real Estate Consulting"
+                },
+                "description": {
+                    "ar": "استشارات متخصصة في الاستثمار العقاري وتقييم العقارات والسوق",
+                    "en": "Specialized consulting in real estate investment, property valuation, and market analysis"
+                },
+                "icon": "💼"
+            },
+            {
+                "title": {
+                    "ar": "التمويل العقاري",
+                    "en": "Real Estate Financing"
+                },
+                "description": {
+                    "ar": "نساعدك في الحصول على أفضل حلول التمويل العقاري من البنوك الشريكة",
+                    "en": "We help you get the best real estate financing solutions from partner banks"
+                },
+                "icon": "💰"
+            }
+        ]
+    },
+    "blogSection": {
+        "title": {
+            "ar": "أحدث المقالات",
+            "en": "Latest Articles"
+        },
+        "subtitle": {
+            "ar": "تابع آخر الأخبار والنصائح في عالم العقارات",
+            "en": "Follow the latest news and tips in the real estate world"
+        },
+        "featuredPosts": [
+            {
+                "postId": "507f1f77bcf86cd799439020",
+                "order": 1
+            },
+            {
+                "postId": "507f1f77bcf86cd799439021",
+                "order": 2
+            },
+            {
+                "postId": "507f1f77bcf86cd799439022",
+                "order": 3
+            }
+        ],
+        "ctaText": {
+            "ar": "عرض جميع المقالات",
+            "en": "View All Articles"
+        }
+    },
+    "contactSection": {
+        "title": {
+            "ar": "تواصل معنا",
+            "en": "Contact Us"
+        },
+        "subtitle": {
+            "ar": "نحن هنا للإجابة على جميع استفساراتك. لا تتردد في التواصل معنا",
+            "en": "We are here to answer all your inquiries. Don't hesitate to contact us"
+        },
+        "phone": [
+            "+20 100 123 4567",
+            "+20 120 987 6543"
+        ],
+        "email": [
+            "info@realestate.com",
+            "sales@realestate.com"
+        ],
+        "address": [
+            {
+                "ar": "123 شارع التحرير، وسط البلد، القاهرة، مصر",
+                "en": "123 Tahrir Street, Downtown, Cairo, Egypt"
+            },
+            {
+                "ar": "456 طريق القطامية، التجمع الخامس، القاهرة الجديدة، مصر",
+                "en": "456 Katameya Road, Fifth Settlement, New Cairo, Egypt"
+            }
+        ],
+        "mapEmbedCode": "https://www.google.com/maps/embed?pb=..."
+    },
+    "displaySettings": {
+        "showHeroSection": true,
+        "showFeaturedProperties": true,
+        "showTestimonials": true,
+        "showStatistics": true,
+        "showAboutSection": true,
+        "showServicesSection": true,
+        "showClientsSection": true,
+        "showBlogSection": true,
+        "showContactSection": true,
+        "showCtaSection": true
+    },
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "updatedAt": "2024-12-20T00:00:00.000Z"
+}

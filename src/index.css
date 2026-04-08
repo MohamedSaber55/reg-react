@@ -1,0 +1,267 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Cairo:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  /* ===== FONTS ===== */
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-tajawal: "Tajawal", sans-serif;
+  --font-kufi: "Noto Kufi Arabic", sans-serif;
+  --font-inter: "Inter", sans-serif;
+
+  /* ===== PRIMARY — BRONZE (Logo: #c0a05c) ===== */
+  --color-primary-50: #fdf8f0;
+  --color-primary-100: #f8edd9;
+  --color-primary-200: #eedeb3;
+  --color-primary-300: #decf8f;
+  --color-primary-400: #cda06b;
+  --color-primary-500: #c0a05c;
+  --color-primary-600: #a3874d;
+  --color-primary-700: #866d3f;
+  --color-primary-800: #6a5633;
+  --color-primary-900: #524328;
+  --color-primary-950: #3b301c;
+
+  /* ===== third — NEUTRAL CHARCOAL ===== */
+  --color-third-50: #fafafa;
+  --color-third-100: #f5f5f5;
+  --color-third-200: #e5e5e5;
+  --color-third-300: #d4d4d4;
+  --color-third-400: #a3a3a3;
+  --color-third-500: #737373;
+  --color-third-600: #525252;
+  --color-third-700: #404040;
+  --color-third-800: #262626;
+  --color-third-900: #171717;
+  --color-third-950: #0a0a0a;
+
+  /* Secondary/Accent Colors */
+  --color-secondary-50: #f7f9fb;
+  --color-secondary-100: #eef2f6;
+  --color-secondary-200: #dde5ed;
+  --color-secondary-300: #c2d1df;
+  --color-secondary-400: #9fb5cb;
+  --color-secondary-500: #8298b3;
+  /* Main secondary */
+  --color-secondary-600: #6a7e9a;
+  --color-secondary-700: #586880;
+  --color-secondary-800: #4b5769;
+  --color-secondary-900: #414b59;
+  --color-secondary-950: #2a3039;
+
+  /* ===== ACCENT — NAVY (Trust & Professionalism) ===== */
+  --color-accent-50: #f0f4fc;
+  --color-accent-100: #dbe6f6;
+  --color-accent-200: #b9d4f2;
+  --color-accent-300: #89bde9;
+  --color-accent-400: #5a9dda;
+  --color-accent-500: #2f6dad;
+  --color-accent-600: #25558a;
+  --color-accent-700: #204773;
+  --color-accent-800: #1c3b5f;
+  --color-accent-900: #1b3350;
+  --color-accent-950: #15273d;
+
+  /* SUCCESS */
+  --color-success-50: #ecfdf5;
+  --color-success-100: #d1fae5;
+  --color-success-200: #a7f3d0;
+  --color-success-300: #6ee7b7;
+  --color-success-400: #34d399;
+  --color-success-500: #10b981;
+  --color-success-600: #059669;
+  --color-success-700: #047857;
+  --color-success-800: #065f46;
+  --color-success-900: #064e3b;
+
+  /* WARNING */
+  --color-warning-50: #fffbeb;
+  --color-warning-100: #fef3c7;
+  --color-warning-200: #fde68a;
+  --color-warning-300: #fcd34d;
+  --color-warning-400: #fbbf24;
+  --color-warning-500: #f59e0b;
+  --color-warning-600: #d97706;
+  --color-warning-700: #b45309;
+  --color-warning-800: #92400e;
+  --color-warning-900: #78350f;
+
+  /* ERROR */
+  --color-error-50: #fef2f2;
+  --color-error-100: #fee2e2;
+  --color-error-200: #fecaca;
+  --color-error-300: #fca5a5;
+  --color-error-400: #f87171;
+  --color-error-500: #ef4444;
+  --color-error-600: #dc2626;
+  --color-error-700: #b91c1c;
+  --color-error-800: #991b1b;
+  --color-error-900: #7f1d1d;
+
+  /* INFO */
+  --color-info-50: #eff6ff;
+  --color-info-100: #dbeafe;
+  --color-info-200: #bfdbfe;
+  --color-info-300: #93c5fd;
+  --color-info-400: #60a5fa;
+  --color-info-500: #3b82f6;
+  --color-info-600: #2563eb;
+  --color-info-700: #1d4ed8;
+  --color-info-800: #1e40af;
+  --color-info-900: #1e3a8a;
+
+  /* Neutral */
+  --color-neutral-50: #faf9f8;
+  --color-neutral-100: #f5f3f0;
+  --color-neutral-200: #eae7e2;
+  --color-neutral-300: #d7d2c9;
+  --color-neutral-400: #bdb5a8;
+  --color-neutral-500: #a19888;
+  --color-neutral-600: #837b6c;
+  --color-neutral-700: #6a6356;
+  --color-neutral-800: #564f44;
+  --color-neutral-900: #484238;
+  --color-neutral-950: #27231d;
+
+  /* ===== SPACING SCALE ===== */
+  --spacing-0: 0;
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-5: 1.25rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-10: 2.5rem;
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
+  --spacing-20: 5rem;
+  --spacing-24: 6rem;
+
+  /* ===== BORDER RADIUS ===== */
+  --radius-none: 0;
+  --radius-sm: 0.25rem;
+  --radius: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* ===== BOX SHADOWS ===== */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+  /* ===== BREAKPOINTS ===== */
+  --screens-xs: 30rem;
+  --screens-sm: 36rem;
+  --screens-md: 48rem;
+  --screens-lg: 64rem;
+  --screens-xl: 80rem;
+  --screens-2xl: 96rem;
+  --screens-3xl: 120rem;
+
+  /* ===== MISC ===== */
+  --duration-300: 300ms;
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+}
+
+body {
+  font-family: var(--font-tajawal);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.min-h-screen-minus-header {
+  min-height: calc(100vh - 64px);
+}
+
+.h-screen-minus-header {
+  height: calc(100vh - 64px);
+}
+
+a,
+button {
+  cursor: pointer;
+  transition: all var(--duration-300) var(--ease-out);
+}
+
+input,
+textarea,
+select {
+  outline: none;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ===== CUSTOM SCROLLBAR STYLES ===== */
+
+/* WebKit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-secondary-400);
+  border-radius: var(--radius-full);
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  transition: background-color 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-600);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Dark mode scrollbar */
+.dark ::-webkit-scrollbar-thumb {
+  background: var(--color-secondary-600);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-500);
+}
+
+/* Firefox scrollbar (limited support) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary-600) transparent;
+}
+
+/* .dark * {
+  scrollbar-color: var(--color-secondary-600) transparent;
+} */
+
+.scrollable-content::-webkit-scrollbar-thumb {
+  background: var(--color-primary-600);
+}
+
+.scrollable-content::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-700);
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
