@@ -183,7 +183,7 @@ export function SliderOption1({
                                                 additionalParams={{ slide_id: slideImage.image.id }}
                                             >
                                                     <div className="relative group h-full">
-                                                        <img
+                                                        <img loading={index === 0 ? "eager" : "lazy"} fetchPriority={index === 0 ? "high" : "auto"} decoding="async"
                                                             src={slideImage.image.imageUrl}
                                                             alt={`Slide ${slideImage.order}`}
                                                             className="w-full h-full object-cover"
@@ -207,7 +207,7 @@ export function SliderOption1({
                                                 </TrackedLink>
                                             ) : (
                                                 <>
-                                                    <img
+                                                    <img loading={index === 0 ? "eager" : "lazy"} fetchPriority={index === 0 ? "high" : "auto"} decoding="async"
                                                         src={slideImage.image.imageUrl}
                                                         alt={`Slide ${slideImage.order}`}
                                                         className="w-full h-full object-cover"
@@ -386,7 +386,7 @@ export function SliderOption2({
                                                 additionalParams={{ slide_id: slideImage.image.id }}
                                             >
                                                         <div className="relative h-full">
-                                                            <img
+                                                            <img loading={index === 0 ? "eager" : "lazy"} fetchPriority={index === 0 ? "high" : "auto"} decoding="async"
                                                                 src={slideImage.image.imageUrl}
                                                                 alt={`Slide ${slideImage.order}`}
                                                                 className="w-full h-full object-cover"
@@ -406,7 +406,7 @@ export function SliderOption2({
                                                     </TrackedLink>
                                                 ) : (
                                                     <>
-                                                        <img
+                                                        <img loading={index === 0 ? "eager" : "lazy"} fetchPriority={index === 0 ? "high" : "auto"} decoding="async"
                                                             src={slideImage.image.imageUrl}
                                                             alt={`Slide ${slideImage.order}`}
                                                             className="w-full h-full object-cover"
@@ -579,7 +579,7 @@ export function SliderOption3({
                                                 additionalParams={{ slide_id: slideImage.image.id }}
                                             >
                                                 <div className="relative group h-full">
-                                                    <img
+                                                    <img loading={index === 0 ? "eager" : "lazy"} fetchPriority={index === 0 ? "high" : "auto"} decoding="async"
                                                         src={slideImage.image.imageUrl}
                                                         alt={`Slide ${slideImage.order}`}
                                                         className="w-full h-full object-cover rounded-2xl"
@@ -597,7 +597,7 @@ export function SliderOption3({
                                                 additionalParams={{ slide_id: slideImage.image.id }}
                                             >
                                                         <div className="relative group h-full">
-                                                            <img
+                                                            <img loading={index === 0 ? "eager" : "lazy"} fetchPriority={index === 0 ? "high" : "auto"} decoding="async"
                                                                 src={slideImage.image.imageUrl}
                                                                 alt={`Slide ${slideImage.order}`}
                                                                 className="w-full h-full object-cover rounded-2xl"
@@ -605,7 +605,7 @@ export function SliderOption3({
                                                         </div>
                                                     </TrackedLink>
                                                 ) : (
-                                                    <img
+                                                    <img loading={index === 0 ? "eager" : "lazy"} fetchPriority={index === 0 ? "high" : "auto"} decoding="async"
                                                         src={slideImage.image.imageUrl}
                                                         alt={`Slide ${slideImage.order}`}
                                                         className="w-full h-full object-cover rounded-2xl"
@@ -790,7 +790,7 @@ export function SliderOption4({
                                                 additionalParams={{ slide_id: slideImage.image.id }}
                                             >
                                                 <div className="relative group h-full">
-                                                    <img
+                                                    <img loading={index === 0 ? "eager" : "lazy"} fetchPriority={index === 0 ? "high" : "auto"} decoding="async"
                                                         src={slideImage.image.imageUrl}
                                                         alt={`Slide ${slideImage.order}`}
                                                         className="w-full h-full object-cover rounded-3xl"
@@ -814,7 +814,7 @@ export function SliderOption4({
                                             </TrackedLink>
                                         ) : (
                                             <>
-                                                <img
+                                                <img loading={index === 0 ? "eager" : "lazy"} fetchPriority={index === 0 ? "high" : "auto"} decoding="async"
                                                     src={slideImage.image.imageUrl}
                                                     alt={`Slide ${slideImage.order}`}
                                                     className="w-full h-full object-cover rounded-3xl"

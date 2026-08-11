@@ -58,7 +58,7 @@ export default function FeaturedProjects() {
                                 {/* Project Image */}
                                 <div className="relative h-64 overflow-hidden">
                                     {project.stages?.[0]?.unitModels?.[0]?.images?.[0]?.imageUrl ? (
-                                        <img src={project.stages[0].unitModels[0].images[0].imageUrl}
+                                        <img loading="lazy" decoding="async" src={project.stages[0].unitModels[0].images[0].imageUrl}
                                             alt={project.name} className="object-cover group-hover:scale-110 transition-transform duration-500"
                                         />
                                     ) : (

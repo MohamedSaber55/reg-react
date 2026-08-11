@@ -73,7 +73,7 @@ export function AboutPageOption3({
                             >
                                 <div className="relative">
                                     <div className={`absolute inset-0 bg-linear-to-br from-primary-400/20 to-accent-400/20     rounded-[3rem] transform ${isRTL ? '-rotate-6' : 'rotate-6'}`} />
-                                    <img
+                                    <img loading="lazy" decoding="async"
                                         src={aboutSection.imageUrl}
                                         alt={title}
                                         className="relative w-full h-125 object-cover rounded-[3rem] shadow-2xl"
@@ -462,7 +462,7 @@ export function AboutPageOption4({
 
                 {aboutSection?.imageUrl && (
                     <div className="absolute inset-0">
-                        <img src={aboutSection.imageUrl} alt={title} className="w-full h-full object-cover opacity-10" />
+                        <img loading="lazy" decoding="async" src={aboutSection.imageUrl} alt={title} className="w-full h-full object-cover opacity-10" />
                     </div>
                 )}
 

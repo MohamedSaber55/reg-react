@@ -232,7 +232,7 @@ export default function SliderImagesPage() {
                                 className="bg-neutral-50   rounded-xl overflow-hidden border border-neutral-400   hover:shadow-lg transition-all duration-300"
                             >
                                 <div className="aspect-4/3 relative overflow-hidden">
-                                    <img
+                                    <img loading="lazy" decoding="async"
                                         src={sliderImage.image?.imageUrl}
                                         alt={sliderImage.image?.titleEn || `Slider image ${sliderImage.order}`}
                                         className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"

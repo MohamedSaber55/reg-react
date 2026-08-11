@@ -31,7 +31,7 @@ export function HeroOption1({ heroSection, isRTL, t, getLocalizedText }) {
                                 [isRTL ? 'right' : 'left']: 0,
                             }}
                         >
-                            <img
+                            <img loading="eager" fetchPriority="high" decoding="async"
                                 src={heroSection.imageUrl}
                                 alt={title}
                                 className="w-full h-full object-cover scale-110"
@@ -227,7 +227,7 @@ export function HeroOption2({ heroSection, isRTL, t, getLocalizedText }) {
                             className="mb-6 relative max-w-2xl"
                         >
                             <div className={`absolute -top-3 -inset-s-3 w-full h-full border-2 border-neutral-900`} />
-                            <img
+                            <img loading="eager" fetchPriority="high" decoding="async"
                                 src={heroSection.imageUrl}
                                 alt={getLocalizedText(heroSection, 'title')}
                                 className="w-full h-48 object-cover relative"
@@ -426,7 +426,7 @@ export function HeroOption3({ heroSection, isRTL, t, getLocalizedText }) {
                         >
                             <div className="relative">
                                 <div className={`absolute inset-0 bg-linear-to-br from-primary-700/30 to-accent-500/30 rounded-2xl transform ${isRTL ? '-rotate-3' : 'rotate-3'}`} />
-                                <img
+                                <img loading="eager" fetchPriority="high" decoding="async"
                                     src={heroSection.imageUrl}
                                     alt={getLocalizedText(heroSection, 'title')}
                                     className="relative w-full  aspect-video object-cover rounded-2xl shadow-xl"
@@ -510,7 +510,7 @@ export function HeroOption4({ heroSection, isRTL, t, getLocalizedText }) {
 
             {heroSection.imageUrl && (
                 <div className="absolute inset-0">
-                    <img
+                    <img loading="eager" fetchPriority="high" decoding="async"
                         src={heroSection.imageUrl}
                         alt={getLocalizedText(heroSection, 'title')}
                         className="w-full h-full object-cover opacity-10"

@@ -125,7 +125,7 @@ export default function HeroSectionsPage() {
                 {/* Image Section */}
                 <div className="relative h-64 bg-linear-to-r from-primary-50 to-secondary-50">
                     {activeHeroSection?.imageUrl ? (
-                        <img
+                        <img loading="lazy" decoding="async"
                             src={activeHeroSection.imageUrl}
                             alt={activeHeroSection.titleEn}
                             className="w-full h-full object-cover"

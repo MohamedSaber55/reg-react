@@ -33,7 +33,7 @@ export function AboutHeroOption1({ aboutSection, isRTL, t, getLocalizedText }) {
                                 [isRTL ? 'right' : 'left']: 0,
                             }}
                         >
-                            <img
+                            <img loading="lazy" decoding="async"
                                 src={aboutSection.imageUrl}
                                 alt={title}
                                 className="w-full h-full object-cover scale-110"
@@ -193,7 +193,7 @@ export function AboutHeroOption2({ aboutSection, isRTL, t, getLocalizedText }) {
                             className="mb-16 relative"
                         >
                             <div className={`absolute -top-6 -inset-s-6 w-full h-full border-4 border-neutral-900  `} />
-                            <img
+                            <img loading="lazy" decoding="async"
                                 src={aboutSection.imageUrl}
                                 alt={title}
                                 className="w-full max-w-2xl h-96 object-cover relative"
@@ -272,7 +272,7 @@ export function AboutHeroOption3({ aboutSection, isRTL, t, getLocalizedText }) {
                         >
                             <div className="relative">
                                 <div className={`absolute inset-0 bg-linear-to-br from-primary-400/20 to-accent-400/20     rounded-[3rem] transform ${isRTL ? '-rotate-6' : 'rotate-6'}`} />
-                                <img
+                                <img loading="lazy" decoding="async"
                                     src={aboutSection.imageUrl}
                                     alt={title}
                                     className="relative w-full h-125 object-cover rounded-[3rem] shadow-2xl"
@@ -385,7 +385,7 @@ export function AboutHeroOption4({ aboutSection, isRTL, t, getLocalizedText }) {
             {/* Background Image with Overlay */}
             {aboutSection?.imageUrl && (
                 <div className="absolute inset-0">
-                    <img
+                    <img loading="lazy" decoding="async"
                         src={aboutSection.imageUrl}
                         alt={title}
                         className="w-full h-full object-cover opacity-10"

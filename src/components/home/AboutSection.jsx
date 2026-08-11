@@ -53,7 +53,7 @@ export function AboutOption1({ aboutSection, heroSection, isRTL, t, getLocalized
                         {aboutSection.imageUrl && (
                             <div className="relative">
                                 {/* Main Image */}
-                                <img
+                                <img loading="lazy" decoding="async"
                                     src={aboutSection.imageUrl}
                                     alt={getLocalizedText(aboutSection, 'title')}
                                     className="w-full h-64 md:h-80 object-cover"
@@ -167,7 +167,7 @@ export function AboutOption2({ aboutSection, heroSection, isRTL, t, getLocalized
                                 <div className={`absolute -top-4 -inset-s-4 w-full h-full border-4 border-neutral-900`} />
 
                                 {/* Main Image */}
-                                <img
+                                <img loading="lazy" decoding="async"
                                     src={aboutSection.imageUrl}
                                     alt={getLocalizedText(aboutSection, 'title')}
                                     className="relative w-full h-64 md:h-80 object-cover border-4 border-neutral-900"
@@ -284,7 +284,7 @@ export function AboutOption3({ aboutSection, heroSection, isRTL, t, getLocalized
                                 <div className={`absolute inset-0 bg-linear-to-br from-primary-400/50 to-accent-400/50 rounded-2xl transform ${isRTL ? '-rotate-3' : 'rotate-3'}`} />
 
                                 {/* Main Image */}
-                                <img
+                                <img loading="lazy" decoding="async"
                                     src={aboutSection.imageUrl}
                                     alt={getLocalizedText(aboutSection, 'title')}
                                     className="relative w-full h-64 md:h-90 object-cover rounded-2xl shadow-xl"
@@ -458,7 +458,7 @@ export function AboutOption4({ aboutSection, heroSection, isRTL, t, getLocalized
                         {aboutSection.imageUrl && (
                             <div className="relative">
                                 {/* Main Image */}
-                                <img
+                                <img loading="lazy" decoding="async"
                                     src={aboutSection.imageUrl}
                                     alt={getLocalizedText(aboutSection, 'title')}
                                     className="w-full h-64 md:h-80 object-cover rounded-2xl"

@@ -26,7 +26,7 @@ export default function ImagePreview({ file, url, alt = 'Preview', className = '
     }
 
     return (
-        <img
+        <img loading="lazy" decoding="async"
             src={previewUrl}
             alt={alt}
             className={`w-full rounded-lg object-cover ${className}`}

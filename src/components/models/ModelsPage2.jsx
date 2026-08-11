@@ -421,7 +421,7 @@ export function ModelsPageOption3({
                                         >
                                             <div className="relative aspect-4/3">
                                                 {model.images?.[0]?.imageUrl ? (
-                                                    <img
+                                                    <img loading="lazy" decoding="async"
                                                         src={model.images[0].imageUrl}
                                                         alt={model.name}
                                                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
@@ -554,7 +554,7 @@ export function ModelsPageOption3({
                                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                             {selectedModel.images.map((image) => (
                                                 <div key={image.id} className="relative aspect-4/3 rounded-3xl overflow-hidden border border-primary-300/50">
-                                                    <img
+                                                    <img loading="lazy" decoding="async"
                                                         src={image.imageUrl}
                                                         alt={selectedModel.name}
                                                         className="w-full h-full object-cover"
@@ -888,7 +888,7 @@ export function ModelsPageOption4({
                                         >
                                             <div className="relative aspect-4/3">
                                                 {model.images?.[0]?.imageUrl ? (
-                                                    <img src={model.images[0].imageUrl} alt={model.name} className="w-full h-full object-cover" />
+                                                    <img loading="lazy" decoding="async" src={model.images[0].imageUrl} alt={model.name} className="w-full h-full object-cover" />
                                                 ) : (
                                                     <div className="w-full h-full bg-white/5 flex items-center justify-center">
                                                         <FiHome className="w-16 h-16 text-white/30" />

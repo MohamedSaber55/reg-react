@@ -128,7 +128,7 @@ export default function AboutPage() {
                                     animate={{ opacity: 1, scale: 1 }}
                                     className="relative h-96 rounded-2xl overflow-hidden shadow-2xl"
                                 >
-                                    <img
+                                    <img loading="lazy" decoding="async"
                                         src={aboutSection.imageUrl}
                                         alt={getLocalizedText(aboutSection, 'title')}
                                         className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"

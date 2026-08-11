@@ -386,7 +386,7 @@ export default function Sidebar({ isOpen, onClose, onLogout }) {
                 {/* Logo */}
                 <div className="h-20 flex items-center justify-between px-6 border-b border-neutral-400">
                     <Link to="/dashboard" className="flex items-center gap-3" onClick={handleLinkClick}>
-                        <img
+                        <img loading="lazy" decoding="async"
                             src="/logo.png"
                             alt={t('dashboard.layout.logoAlt')}
                             className="h-12 object-contain"

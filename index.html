@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Every page's first paint waits on data from the API host; opening the
+         connection early saves a DNS + TCP + TLS round trip on cold loads. -->
+    <link rel="preconnect" href="https://reg-me.runasp.net" crossorigin />
+    <link rel="dns-prefetch" href="https://reg-me.runasp.net" />
     <title>Real State Group (R.E.G)</title>
     <meta name="description" content="R.E.G is a real estate administration platform dedicated to managing and publishing properties." />
   </head>

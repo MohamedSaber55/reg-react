@@ -3,73 +3,95 @@ import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Search, X, ChevronLeft, ChevronRight, Grid, List } from 'lucide-react';
 
-// Import ALL React Icons sets
-import * as Fa from 'react-icons/fa';
-import * as Fa6 from 'react-icons/fa6';
-import * as Md from 'react-icons/md';
-import * as Io from 'react-icons/io5';
-import * as Hi from 'react-icons/hi2';
-import * as HiOutline from 'react-icons/hi';
-import * as Si from 'react-icons/si';
-import * as Ti from 'react-icons/ti';
-import * as Go from 'react-icons/go';
-import * as Fi from 'react-icons/fi';
-import * as Gi from 'react-icons/gi';
-import * as Wi from 'react-icons/wi';
-import * as Di from 'react-icons/di';
-import * as Ai from 'react-icons/ai';
-import * as Bs from 'react-icons/bs';
-import * as Ri from 'react-icons/ri';
-import * as Fc from 'react-icons/fc';
-import * as Gr from 'react-icons/gr';
-import * as Im from 'react-icons/im';
-import * as Bi from 'react-icons/bi';
-import * as Cg from 'react-icons/cg';
-import * as Vsc from 'react-icons/vsc';
-import * as Tb from 'react-icons/tb';
-import * as Tfi from 'react-icons/tfi';
-import * as Rx from 'react-icons/rx';
-import * as Pi from 'react-icons/pi';
-import * as Lu from 'react-icons/lu';
-import * as Ci from 'react-icons/ci';
-import * as Lia from 'react-icons/lia';
-import * as Sl from 'react-icons/sl';
+/**
+ * Icon packs are loaded on demand.
+ *
+ * This file previously did `import * as X from 'react-icons/<pack>'` for 30
+ * packs. A namespace import cannot be tree-shaken, so all ~36 MB of icons were
+ * pulled into the bundle - and because this component is reachable from the
+ * statically imported dashboard, every public visitor downloaded it. Loading
+ * each pack through a dynamic import keeps it out of the entry chunk and off
+ * the critical path entirely.
+ */
+const ICON_PACK_LOADERS = {
+    fa: () => import('react-icons/fa'),
+    fa6: () => import('react-icons/fa6'),
+    md: () => import('react-icons/md'),
+    io5: () => import('react-icons/io5'),
+    hi2: () => import('react-icons/hi2'),
+    hi: () => import('react-icons/hi'),
+    si: () => import('react-icons/si'),
+    ti: () => import('react-icons/ti'),
+    go: () => import('react-icons/go'),
+    fi: () => import('react-icons/fi'),
+    gi: () => import('react-icons/gi'),
+    wi: () => import('react-icons/wi'),
+    di: () => import('react-icons/di'),
+    ai: () => import('react-icons/ai'),
+    bs: () => import('react-icons/bs'),
+    ri: () => import('react-icons/ri'),
+    fc: () => import('react-icons/fc'),
+    gr: () => import('react-icons/gr'),
+    im: () => import('react-icons/im'),
+    bi: () => import('react-icons/bi'),
+    cg: () => import('react-icons/cg'),
+    vsc: () => import('react-icons/vsc'),
+    tb: () => import('react-icons/tb'),
+    tfi: () => import('react-icons/tfi'),
+    rx: () => import('react-icons/rx'),
+    pi: () => import('react-icons/pi'),
+    lu: () => import('react-icons/lu'),
+    ci: () => import('react-icons/ci'),
+    lia: () => import('react-icons/lia'),
+    sl: () => import('react-icons/sl'),
+};
 
-// Define all icon sets with metadata
+/** Cache of in-flight/resolved pack modules, shared across every picker instance. */
+const packCache = new Map();
+
+const loadPack = (pkg) => {
+    const loader = ICON_PACK_LOADERS[pkg];
+    if (!loader) return Promise.resolve(null);
+    if (!packCache.has(pkg)) {
+        packCache.set(pkg, loader().catch(() => null));
+    }
+    return packCache.get(pkg);
+};
+
+// Metadata only - the icon components themselves arrive via loadPack.
 const ICON_SETS = [
-    { name: 'Font Awesome 6', icons: Fa6, prefix: 'Fa', color: '#528DD7', category: 'Popular', package: 'fa6' },
-    { name: 'Font Awesome', icons: Fa, prefix: 'Fa', color: '#528DD7', category: 'Popular', package: 'fa' },
-    { name: 'Material Design', icons: Md, prefix: 'Md', color: '#FF5722', category: 'Popular', package: 'md' },
-    { name: 'Heroicons 2', icons: Hi, prefix: 'Hi', color: '#3B82F6', category: 'Popular', package: 'hi2' },
-    { name: 'Heroicons', icons: HiOutline, prefix: 'Hi', color: '#3B82F6', category: 'Popular', package: 'hi' },
-    { name: 'Ionicons 5', icons: Io, prefix: 'Io', color: '#3880FF', category: 'Popular', package: 'io5' },
-    { name: 'Feather', icons: Fi, prefix: 'Fi', color: '#4A5568', category: 'Popular', package: 'fi' },
-    { name: 'Lucide', icons: Lu, prefix: 'Lu', color: '#3B82F6', category: 'Popular', package: 'lu' },
-    { name: 'Simple Icons', icons: Si, prefix: 'Si', color: '#000000', category: 'Brands', package: 'si' },
-    { name: 'Bootstrap', icons: Bs, prefix: 'Bs', color: '#7952B3', category: 'UI Frameworks', package: 'bs' },
-    { name: 'Ant Design', icons: Ai, prefix: 'Ai', color: '#1890FF', category: 'UI Frameworks', package: 'ai' },
-    { name: 'Remix Icon', icons: Ri, prefix: 'Ri', color: '#25B864', category: 'UI Frameworks', package: 'ri' },
-    { name: 'Radix UI', icons: Rx, prefix: 'Rx', color: '#6B7280', category: 'UI Frameworks', package: 'rx' },
-    { name: 'Tabler Icons', icons: Tb, prefix: 'Tb', color: '#206BC4', category: 'UI Frameworks', package: 'tb' },
-    { name: 'Phosphor', icons: Pi, prefix: 'Pi', color: '#60A5FA', category: 'UI Frameworks', package: 'pi' },
-    { name: 'Google Material', icons: Fc, prefix: 'Fc', color: '#4285F4', category: 'Google', package: 'fc' },
-    { name: 'Grommet', icons: Gr, prefix: 'Gr', color: '#7D4CDB', category: 'UI Frameworks', package: 'gr' },
-    { name: 'Devicon', icons: Di, prefix: 'Di', color: '#333333', category: 'Development', package: 'di' },
-    { name: 'Octicons', icons: Go, prefix: 'Go', color: '#24292E', category: 'Development', package: 'go' },
-    { name: 'VS Code', icons: Vsc, prefix: 'Vsc', color: '#007ACC', category: 'Development', package: 'vsc' },
-    { name: 'Game Icons', icons: Gi, prefix: 'Gi', color: '#FF6B6B', category: 'Games', package: 'gi' },
-    { name: 'Weather Icons', icons: Wi, prefix: 'Wi', color: '#4A90E2', category: 'Weather', package: 'wi' },
-    { name: 'Themify', icons: Ti, prefix: 'Ti', color: '#FF4081', category: 'UI', package: 'ti' },
-    { name: 'Circum', icons: Ci, prefix: 'Ci', color: '#6B7280', category: 'UI', package: 'ci' },
-    { name: 'Linearicons', icons: Lia, prefix: 'Lia', color: '#3B82F6', category: 'UI', package: 'lia' },
-    { name: 'Bytesize', icons: Tfi, prefix: 'Tfi', color: '#4A5568', category: 'UI', package: 'tfi' },
-    { name: 'Core UI', icons: Cg, prefix: 'Cg', color: '#6B7280', category: 'UI', package: 'cg' },
-    { name: 'BoxIcons', icons: Bi, prefix: 'Bi', color: '#3B82F6', category: 'UI', package: 'bi' },
-    { name: 'IcoMoon', icons: Im, prefix: 'Im', color: '#8257E5', category: 'UI', package: 'im' },
-    { name: 'Eva Icons', icons: Sl, prefix: 'Sl', color: '#7C3AED', category: 'UI', package: 'sl' },
+    { name: 'Font Awesome 6', prefix: 'Fa', color: '#528DD7', category: 'Popular', package: 'fa6' },
+    { name: 'Font Awesome', prefix: 'Fa', color: '#528DD7', category: 'Popular', package: 'fa' },
+    { name: 'Material Design', prefix: 'Md', color: '#FF5722', category: 'Popular', package: 'md' },
+    { name: 'Heroicons 2', prefix: 'Hi', color: '#3B82F6', category: 'Popular', package: 'hi2' },
+    { name: 'Heroicons', prefix: 'Hi', color: '#3B82F6', category: 'Popular', package: 'hi' },
+    { name: 'Ionicons 5', prefix: 'Io', color: '#3880FF', category: 'Popular', package: 'io5' },
+    { name: 'Feather', prefix: 'Fi', color: '#4A5568', category: 'Popular', package: 'fi' },
+    { name: 'Lucide', prefix: 'Lu', color: '#3B82F6', category: 'Popular', package: 'lu' },
+    { name: 'Simple Icons', prefix: 'Si', color: '#000000', category: 'Brands', package: 'si' },
+    { name: 'Bootstrap', prefix: 'Bs', color: '#7952B3', category: 'UI Frameworks', package: 'bs' },
+    { name: 'Ant Design', prefix: 'Ai', color: '#1890FF', category: 'UI Frameworks', package: 'ai' },
+    { name: 'Remix Icon', prefix: 'Ri', color: '#25B864', category: 'UI Frameworks', package: 'ri' },
+    { name: 'Radix UI', prefix: 'Rx', color: '#6B7280', category: 'UI Frameworks', package: 'rx' },
+    { name: 'Tabler Icons', prefix: 'Tb', color: '#206BC4', category: 'UI Frameworks', package: 'tb' },
+    { name: 'Phosphor', prefix: 'Pi', color: '#60A5FA', category: 'UI Frameworks', package: 'pi' },
+    { name: 'Google Material', prefix: 'Fc', color: '#4285F4', category: 'Google', package: 'fc' },
+    { name: 'Grommet', prefix: 'Gr', color: '#7D4CDB', category: 'UI Frameworks', package: 'gr' },
+    { name: 'Devicon', prefix: 'Di', color: '#333333', category: 'Development', package: 'di' },
+    { name: 'Octicons', prefix: 'Go', color: '#24292E', category: 'Development', package: 'go' },
+    { name: 'VS Code', prefix: 'Vsc', color: '#007ACC', category: 'Development', package: 'vsc' },
+    { name: 'Game Icons', prefix: 'Gi', color: '#FF6B6B', category: 'Games', package: 'gi' },
+    { name: 'Weather Icons', prefix: 'Wi', color: '#4A90E2', category: 'Weather', package: 'wi' },
+    { name: 'Themify', prefix: 'Ti', color: '#FF4081', category: 'UI', package: 'ti' },
+    { name: 'Circum', prefix: 'Ci', color: '#6B7280', category: 'UI', package: 'ci' },
+    { name: 'Linearicons', prefix: 'Lia', color: '#3B82F6', category: 'UI', package: 'lia' },
+    { name: 'Bytesize', prefix: 'Tfi', color: '#4A5568', category: 'UI', package: 'tfi' },
+    { name: 'Core UI', prefix: 'Cg', color: '#6B7280', category: 'UI', package: 'cg' },
+    { name: 'BoxIcons', prefix: 'Bi', color: '#3B82F6', category: 'UI', package: 'bi' },
+    { name: 'IcoMoon', prefix: 'Im', color: '#8257E5', category: 'UI', package: 'im' },
+    { name: 'Eva Icons', prefix: 'Sl', color: '#7C3AED', category: 'UI', package: 'sl' },
 ];
 
-// Categories for filtering
 const CATEGORIES = [
     'All',
     'Popular',
@@ -82,53 +104,21 @@ const CATEGORIES = [
     'UI'
 ];
 
-// Parse icon value from various formats
-const parseIconValue = (value, sets = ICON_SETS) => {
-    if (!value) return { displayValue: '', iconComponent: null, setName: '', iconName: '' };
-
-    // Format: "Font Awesome/FaHeart"
-    if (value.includes('/')) {
-        const [setName, iconName] = value.split('/');
-        const set = sets.find(s => s.name === setName);
-        if (set && set.icons[iconName]) {
-            return {
-                displayValue: value,
-                iconComponent: set.icons[iconName],
-                setName,
-                iconName
-            };
-        }
-    }
-
-    // Try to find in any set
-    for (const set of sets) {
-        const IconComponent = set.icons[value];
-        if (IconComponent) {
-            return {
-                displayValue: value,
-                iconComponent: IconComponent,
-                setName: set.name,
-                iconName: value
-            };
-        }
-    }
-
-    return { displayValue: value, iconComponent: null, setName: '', iconName: '' };
-};
-
 export default function IconPicker({ value, onChange, error, label, helperText }) {
     const { t } = useTranslation();
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedSet, setSelectedSet] = useState('All');
-    const [selectedCategory, setSelectedCategory] = useState('All');
+    // Defaults to Popular rather than All: "All" means fetching every pack,
+    // which is tens of megabytes over the network.
+    const [selectedCategory, setSelectedCategory] = useState('Popular');
     const [isOpen, setIsOpen] = useState(false);
-    const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
+    const [viewMode, setViewMode] = useState('grid');
     const [page, setPage] = useState(1);
+    const [loadedPacks, setLoadedPacks] = useState({});
+    const [isLoadingPacks, setIsLoadingPacks] = useState(false);
+    const [previewIcon, setPreviewIcon] = useState(null);
     const itemsPerPage = 200;
     const searchInputRef = useRef(null);
-
-    // Parse current value
-    const currentIcon = useMemo(() => parseIconValue(value), [value]);
 
     // Focus search input when modal opens
     useEffect(() => {
@@ -139,23 +129,111 @@ export default function IconPicker({ value, onChange, error, label, helperText }
         }
     }, [isOpen]);
 
-    // Filter and paginate icons
+    // Packs the current filter needs.
+    const requiredPackages = useMemo(
+        () =>
+            ICON_SETS.filter(
+                (set) =>
+                    (selectedCategory === 'All' || set.category === selectedCategory) &&
+                    (selectedSet === 'All' || set.name === selectedSet)
+            ).map((set) => set.package),
+        [selectedCategory, selectedSet]
+    );
+
+    const requiredKey = requiredPackages.join(',');
+
+    // Fetch whatever the current filter needs, once the modal is actually open.
+    useEffect(() => {
+        if (!isOpen) return undefined;
+
+        let cancelled = false;
+        const pending = requiredPackages.filter((pkg) => !loadedPacks[pkg]);
+        if (pending.length === 0) return undefined;
+
+        setIsLoadingPacks(true);
+
+        Promise.all(pending.map(async (pkg) => [pkg, await loadPack(pkg)]))
+            .then((entries) => {
+                if (cancelled) return;
+                setLoadedPacks((prev) => {
+                    const next = { ...prev };
+                    entries.forEach(([pkg, mod]) => {
+                        if (mod) next[pkg] = mod;
+                    });
+                    return next;
+                });
+            })
+            .finally(() => {
+                if (!cancelled) setIsLoadingPacks(false);
+            });
+
+        return () => {
+            cancelled = true;
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isOpen, requiredKey]);
+
+    // Resolve the currently selected value to a component for the preview button.
+    useEffect(() => {
+        let cancelled = false;
+
+        if (!value) {
+            setPreviewIcon(null);
+            return undefined;
+        }
+
+        const resolve = async () => {
+            if (value.includes('/')) {
+                const [setName, iconName] = value.split('/');
+                const set = ICON_SETS.find((s) => s.name === setName);
+                if (set) {
+                    const mod = await loadPack(set.package);
+                    if (cancelled) return;
+                    if (mod?.[iconName]) {
+                        setPreviewIcon({ component: mod[iconName], setName, iconName });
+                        return;
+                    }
+                }
+            }
+
+            // Bare icon name - only scan the popular packs so a lookup can't
+            // pull every library over the network.
+            for (const set of ICON_SETS.filter((s) => s.category === 'Popular')) {
+                const mod = await loadPack(set.package);
+                if (cancelled) return;
+                if (mod?.[value]) {
+                    setPreviewIcon({ component: mod[value], setName: set.name, iconName: value });
+                    return;
+                }
+            }
+
+            if (!cancelled) setPreviewIcon({ component: null, setName: '', iconName: value });
+        };
+
+        resolve();
+        return () => {
+            cancelled = true;
+        };
+    }, [value]);
+
+    // Filter icons across the packs that have loaded.
     const filteredIcons = useMemo(() => {
         const allIcons = [];
 
         ICON_SETS.forEach(set => {
-            // Filter by category
             if (selectedCategory !== 'All' && set.category !== selectedCategory) {
                 return;
             }
-
-            // Filter by selected set
             if (selectedSet !== 'All' && set.name !== selectedSet) {
                 return;
             }
 
-            Object.entries(set.icons).forEach(([name, IconComponent]) => {
-                // Filter by search term
+            const mod = loadedPacks[set.package];
+            if (!mod) return;
+
+            Object.entries(mod).forEach(([name, IconComponent]) => {
+                if (typeof IconComponent !== 'function') return;
+
                 const displayName = name.replace(set.prefix, '').replace(/([A-Z])/g, ' $1').trim();
                 const searchLower = searchTerm.toLowerCase();
 
@@ -178,7 +256,6 @@ export default function IconPicker({ value, onChange, error, label, helperText }
             });
         });
 
-        // Sort by relevance when searching
         if (searchTerm) {
             allIcons.sort((a, b) => {
                 const aStartsWith = a.name.toLowerCase().startsWith(searchTerm.toLowerCase());
@@ -190,7 +267,7 @@ export default function IconPicker({ value, onChange, error, label, helperText }
         }
 
         return allIcons;
-    }, [searchTerm, selectedSet, selectedCategory]);
+    }, [searchTerm, selectedSet, selectedCategory, loadedPacks]);
 
     // Paginate icons
     const paginatedIcons = useMemo(() => {
@@ -198,12 +275,9 @@ export default function IconPicker({ value, onChange, error, label, helperText }
         return filteredIcons.slice(startIndex, startIndex + itemsPerPage);
     }, [filteredIcons, page]);
 
-    // Calculate total pages
     const totalPages = Math.ceil(filteredIcons.length / itemsPerPage);
 
-    // Handle icon selection
     const handleIconSelect = (icon) => {
-        // Format: "Set Name/IconName"
         const formattedValue = `${icon.setName}/${icon.name}`;
         onChange(formattedValue);
         setIsOpen(false);
@@ -211,11 +285,10 @@ export default function IconPicker({ value, onChange, error, label, helperText }
         setSearchTerm('');
     };
 
-    // Reset filters
     const resetFilters = () => {
         setSearchTerm('');
         setSelectedSet('All');
-        setSelectedCategory('All');
+        setSelectedCategory('Popular');
         setPage(1);
     };
 
@@ -240,11 +313,11 @@ export default function IconPicker({ value, onChange, error, label, helperText }
                         transition-colors duration-200 shrink-0
                     `}
                 >
-                    {currentIcon.iconComponent ? (
+                    {previewIcon?.component ? (
                         <>
-                            <currentIcon.iconComponent className="h-5 w-5" />
+                            <previewIcon.component className="h-5 w-5" />
                             <span className="text-sm text-third-900   max-w-37.5 truncate">
-                                {currentIcon.iconName}
+                                {previewIcon.iconName}
                             </span>
                         </>
                     ) : (
@@ -268,10 +341,10 @@ export default function IconPicker({ value, onChange, error, label, helperText }
                             bg-white   text-third-900  
                         `}
                     />
-                    {currentIcon.setName && (
+                    {previewIcon?.setName && (
                         <div className="absolute inset-e-2 top-1/2 transform -translate-y-1/2">
                             <span className="text-xs px-2 py-1 rounded-full bg-neutral-100   text-third-500">
-                                {currentIcon.setName}
+                                {previewIcon.setName}
                             </span>
                         </div>
                     )}
@@ -393,7 +466,11 @@ export default function IconPicker({ value, onChange, error, label, helperText }
 
                         {/* Icons Display */}
                         <div className="flex-1 overflow-auto p-4">
-                            {paginatedIcons.length > 0 ? (
+                            {isLoadingPacks && paginatedIcons.length === 0 ? (
+                                <div className="text-center py-12 text-third-500">
+                                    Loading icon sets...
+                                </div>
+                            ) : paginatedIcons.length > 0 ? (
                                 <>
                                     {/* Grid View */}
                                     {viewMode === 'grid' ? (

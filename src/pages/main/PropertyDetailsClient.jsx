@@ -331,7 +331,7 @@ Property ID: ${property.id}
                                                 setShowFullImage(true);
                                             }}
                                         >
-                                            <img src={defaultPropertyImage}
+                                            <img loading="lazy" decoding="async" src={defaultPropertyImage}
                                                 alt={title}
                                                 className="w-full h-full object-cover"
                                                 width={1200}
@@ -367,7 +367,7 @@ Property ID: ${property.id}
                                                             setShowFullImage(true);
                                                         }}
                                                     >
-                                                        <img
+                                                        <img loading="lazy" decoding="async"
                                                             src={image.imageUrl}
                                                             alt={`${title} - Image ${index + 1}`}
                                                             className="w-full h-full object-cover"
@@ -400,7 +400,7 @@ Property ID: ${property.id}
                                                 {activeImages.map((image) => (
                                                     <SwiperSlide key={image.id}>
                                                         <div className="cursor-pointer rounded-lg overflow-hidden aspect-video border-2 border-transparent hover:border-primary-500 transition-all">
-                                                            <img
+                                                            <img loading="lazy" decoding="async"
                                                                 src={image.imageUrl}
                                                                 alt={title}
                                                                 className="w-full h-full object-cover"
@@ -799,7 +799,7 @@ Property ID: ${property.id}
                                 {activeImages.map((image) => (
                                     <SwiperSlide key={image.id}>
                                         <div className="flex items-center justify-center h-[80vh]">
-                                            <img
+                                            <img loading="lazy" decoding="async"
                                                 src={image.imageUrl}
                                                 alt={title}
                                                 className="max-w-full max-h-full object-contain"

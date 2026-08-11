@@ -63,7 +63,7 @@ export function AboutPageOption1({
                                     [isRTL ? 'right' : 'left']: 0,
                                 }}
                             >
-                                <img src={aboutSection.imageUrl} alt={title} className="w-full h-full object-cover scale-110" />
+                                <img loading="lazy" decoding="async" src={aboutSection.imageUrl} alt={title} className="w-full h-full object-cover scale-110" />
                                 <div className={`absolute inset-0 ${isRTL ? 'bg-linear-to-l' : 'bg-linear-to-r'} from-transparent to-secondary-950/80`} />
                             </div>
                             <div className={`absolute inset-0  inset-s-[60%] bg-secondary-950`} />
@@ -434,7 +434,7 @@ export function AboutPageOption2({
                                 className="mb-16 relative"
                             >
                                 <div className={`absolute -top-6 -inset-s-6 w-full h-full border-4 border-neutral-900`} />
-                                <img src={aboutSection.imageUrl} alt={title} className="w-full max-w-2xl h-96 object-cover relative" />
+                                <img loading="lazy" decoding="async" src={aboutSection.imageUrl} alt={title} className="w-full max-w-2xl h-96 object-cover relative" />
                             </motion.div>
                         )}
 

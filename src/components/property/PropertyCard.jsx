@@ -152,7 +152,7 @@ export function PropertyCardOption1({ property, viewMode = 'grid' }) {
 
                         {/* Image Container */}
                         <div className="relative h-56 overflow-hidden">
-                            <motion.img
+                            <motion.img loading="lazy" decoding="async"
                                 src={imageUrl}
                                 alt={title}
                                 className="w-full h-full object-cover"
@@ -367,7 +367,7 @@ export function PropertyCardOption1({ property, viewMode = 'grid' }) {
                     <div className="flex flex-col md:flex-row">
                         {/* Image Container */}
                         <div className="relative md:w-64 h-56 md:h-auto overflow-hidden shrink-0">
-                            <motion.img
+                            <motion.img loading="lazy" decoding="async"
                                 src={imageUrl}
                                 alt={title}
                                 className="w-full h-full object-cover"
@@ -633,7 +633,7 @@ export function PropertyCardOption3({ property, viewMode = 'grid' }) {
                     <div className="relative bg-white rounded-2xl overflow-hidden border border-primary-300/50 hover:border-primary-500/70 transition-all duration-300">
                         {/* Image Container */}
                         <div className="relative h-56 overflow-hidden">
-                            <motion.img
+                            <motion.img loading="lazy" decoding="async"
                                 src={imageUrl}
                                 alt={title}
                                 className="w-full h-full object-cover"
@@ -759,7 +759,7 @@ export function PropertyCardOption3({ property, viewMode = 'grid' }) {
                     <div className="flex flex-col md:flex-row">
                         {/* Image Container */}
                         <div className="relative md:w-64 h-56 md:h-auto overflow-hidden shrink-0">
-                            <motion.img
+                            <motion.img loading="lazy" decoding="async"
                                 src={imageUrl}
                                 alt={title}
                                 className="w-full h-full object-cover"

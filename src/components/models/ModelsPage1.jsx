@@ -242,7 +242,7 @@ export function ModelsPageOption1({
                                         >
                                             <div className="relative aspect-4/3">
                                                 {model.images?.[0]?.imageUrl ? (
-                                                    <img
+                                                    <img loading="lazy" decoding="async"
                                                         src={model.images[0].imageUrl}
                                                         alt={model.name}
                                                         className="w-full h-full object-cover"

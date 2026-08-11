@@ -29,7 +29,7 @@ export const UnitModelCard = ({ unit, viewMode = 'grid' }) => {
                 <div className="flex flex-col md:flex-row">
                     {/* Image */}
                     <div className="md:w-64 aspect-video md:aspect-square overflow-hidden">
-                        <img
+                        <img loading="lazy" decoding="async"
                             src={imageUrl}
                             alt={unit.name}
                             className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
@@ -112,7 +112,7 @@ export const UnitModelCard = ({ unit, viewMode = 'grid' }) => {
         >
             {/* Image */}
             <div className="aspect-video overflow-hidden">
-                <img
+                <img loading="lazy" decoding="async"
                     src={imageUrl}
                     alt={unit.name}
                     className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"

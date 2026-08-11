@@ -87,7 +87,7 @@ export function FooterOption1() {
                     {/* Company Info */}
                     <div>
                         <div className="flex items-center gap-3 mb-6">
-                            <img
+                            <img loading="lazy" decoding="async"
                                 src="/logo.png"
                                 alt="Logo"
                                 className="h-12 object-contain"
@@ -363,7 +363,7 @@ export function FooterOption2() {
                     {/* Company Info */}
                     <div className="relative">
                         <div className="mb-6">
-                            <img
+                            <img loading="lazy" decoding="async"
                                 src="/logo.png"
                                 alt="Logo"
                                 className="h-12 object-contain"
@@ -648,7 +648,7 @@ export function FooterOption3() {
                                 trackEvent="logo"
                                 trackLocation="footer"
                             >
-                                <img
+                                <img loading="lazy" decoding="async"
                                     src="/logo.png"
                                     alt="Logo"
                                     className="h-12 object-contain"
@@ -956,7 +956,7 @@ export function FooterOption4() {
                     {/* Company Info */}
                     <div>
                         <div className="mb-6">
-                            <img
+                            <img loading="lazy" decoding="async"
                                 src="/logo.png"
                                 alt="Logo"
                                 className="h-12 object-contain"

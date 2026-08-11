@@ -540,7 +540,7 @@ const UnitModelCard = ({ unit, onClick, viewMode, t }) => {
         >
             {mainImage && (
                 <div className="aspect-video overflow-hidden">
-                    <img
+                    <img loading="lazy" decoding="async"
                         src={mainImage.imageUrl}
                         alt={unit.name}
                         className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"

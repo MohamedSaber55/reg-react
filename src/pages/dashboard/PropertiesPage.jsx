@@ -316,7 +316,7 @@ export default function PropertiesManagementPage() {
                                         </td>
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-3">
-                                                <img
+                                                <img loading="lazy" decoding="async"
                                                     src={property.images?.[0]?.imageUrl || defaultPropertyImage.src}
                                                     alt={property.titleEn}
                                                     className="w-16 h-16 rounded-lg object-cover"

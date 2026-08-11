@@ -178,7 +178,7 @@ const TestimonialCard = ({
                     {/* Avatar */}
                     <div className={`${style.avatar} w-12 h-12 rounded-full flex items-center justify-center shadow-lg`}>
                         {data.avatar ? (
-                            <img
+                            <img loading="lazy" decoding="async"
                                 src={data.avatar}
                                 alt={data.name}
                                 className="w-full h-full rounded-full object-cover"

@@ -129,7 +129,7 @@ export const SliderImagesForm = ({ sliderId, onSubmit, onCancel, initialImages =
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 {image.preview ? (
-                                    <img src={image.preview} alt={`Preview ${index}`} className="w-full h-32 object-cover rounded" />
+                                    <img loading="lazy" decoding="async" src={image.preview} alt={`Preview ${index}`} className="w-full h-32 object-cover rounded" />
                                 ) : (
                                     <label className="flex flex-col items-center justify-center gap-2 w-full h-32 border-2 border-dashed border-neutral-400 rounded cursor-pointer hover:border-primary-500">
                                         <FiUpload className="w-6 h-6 text-primary-600" />
