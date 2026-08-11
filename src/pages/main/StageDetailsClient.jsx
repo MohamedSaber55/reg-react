@@ -21,6 +21,10 @@ import {
 } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
 import { formatPrice } from '@/utils/priceUtils';
+import {
+    usePageEngagementTracking,
+    useContentViewOnLoad,
+} from '@/hooks/useMetaPixelPageView';
 
 
 export default function StageDetailsClient({ projectId, stageId }) {
@@ -28,8 +32,9 @@ export default function StageDetailsClient({ projectId, stageId }) {
     const params = useParams();
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const resolvedProjectId = typeof id === 'string' && id !== 'placeholder'
-        ? id
+    // params.id is the project segment of /projects/:id/stages/:stageId
+    const resolvedProjectId = typeof params?.id === 'string' && params.id !== 'placeholder'
+        ? params.id
         : projectId;
     const resolvedStageId = typeof params?.stageId === 'string' && params.stageId !== 'placeholder'
         ? params.stageId
@@ -102,6 +107,22 @@ export default function StageDetailsClient({ projectId, stageId }) {
     const handleUnitClick = (unitId) => {
         navigate(`/projects/${resolvedProjectId}/stages/${resolvedStageId}/units/${unitId}`);
     };
+
+    // ─── Tracking ────────────────────────────────────────────────────────────
+    usePageEngagementTracking('Stage Details');
+
+    useContentViewOnLoad(
+        'stage',
+        currentStage
+            ? {
+                id: currentStage.id,
+                name: currentStage.name,
+                projectName: currentStage.projectName,
+                unitCount: pagination?.totalCount ?? unitModels?.length ?? 0,
+            }
+            : null
+    );
+    // ─────────────────────────────────────────────────────────────────────────
 
     if (operationLoading || !currentStage) {
         return (

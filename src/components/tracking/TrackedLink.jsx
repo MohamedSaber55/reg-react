@@ -25,19 +25,21 @@ export const TrackedLink = ({
     const handleClick = (e) => {
         const linkName = trackName || (typeof children === 'string' ? children : 'Link');
 
-        // Track based on event type
+        // Track based on event type. additionalParams is forwarded in every
+        // branch so callers can attach context (property id, project name, ...)
+        // regardless of which event type they picked.
         switch (trackEvent) {
             case 'nav':
-                metaPixelEvents.navClick(linkName, href, trackLocation);
+                metaPixelEvents.navClick(linkName, href, trackLocation, additionalParams);
                 break;
             case 'footer':
-                metaPixelEvents.footerNavClick(linkName, href);
+                metaPixelEvents.footerNavClick(linkName, href, additionalParams);
                 break;
             case 'cta':
-                metaPixelEvents.ctaClick(linkName, href, trackLocation);
+                metaPixelEvents.ctaClick(linkName, href, trackLocation, additionalParams);
                 break;
             case 'external':
-                metaPixelEvents.externalLinkClick(linkName, href, trackLocation);
+                metaPixelEvents.externalLinkClick(linkName, href, trackLocation, additionalParams);
                 break;
             case 'logo':
                 metaPixelEvents.logoClick(trackLocation);

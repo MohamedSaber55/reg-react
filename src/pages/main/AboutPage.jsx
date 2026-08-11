@@ -19,7 +19,7 @@ import DynamicIcon from '@/components/common/DynamicIconLazy';
 // import TestimonialsSwiper from '@/components/common/TestimonialsSwiper';
 import { fetchHeroSections } from '@/store/slices/heroSectionSlice';
 import { TestimonialsSection } from '@/components/common/TestimonialsSwiper';
-import { useComprehensivePageTracking } from '@/hooks/useMetaPixelPageView';
+import { usePageEngagementTracking } from '@/hooks/useMetaPixelPageView';
 import metaPixelEvents from '@/utils/metaPixelTracking';
 
 export default function AboutPage() {
@@ -51,11 +51,7 @@ export default function AboutPage() {
     const serviceSection = serviceSections?.[0];
     const heroSection = heroSections?.find(h => h.isActive) || heroSections?.[0];
 
-    useComprehensivePageTracking('About Us', {
-        language: currentLang,
-        rtl: isRTL,
-        section: 'about'
-    });
+    usePageEngagementTracking('About Us');
 
     const handleFaqToggle = (faqId) => {
         setExpandedFaq(expandedFaq === faqId ? null : faqId);
@@ -239,9 +235,10 @@ export default function AboutPage() {
                     </div>
                 )}
 
-                {/* Services Section */}
+                {/* Services Section — target of the "View All Services" CTAs.
+                    scroll-mt-24 keeps the heading clear of the fixed header. */}
                 {serviceSection?.serviceItems && serviceSection.serviceItems.length > 0 && (
-                    <div className="mb-16">
+                    <div id="services" className="mb-16 scroll-mt-24">
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}

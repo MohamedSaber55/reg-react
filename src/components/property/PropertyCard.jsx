@@ -44,6 +44,29 @@ export function PropertyCardOption1({ property, viewMode = 'grid' }) {
         ? property.images[0].imageUrl
         : defaultPropertyImage.src;
 
+    // ─── Tracking helpers ────────────────────────────────────────────────────
+    // This variant is the fallback for PropertyCard's `designOption` switch, so
+    // it renders on the homepage — it needs the same coverage as Option3.
+    const trackCardView = () => {
+        metaPixelEvents.viewProperty(
+            property.id,
+            title,
+            property.propertyTypeName || 'property',
+            property.price,
+            'EGP'
+        );
+    };
+
+    const contactContext = {
+        property_id: property.id,
+        property_name: title,
+        value: property.price,
+        currency: 'EGP',
+    };
+
+    const cardLocation = viewMode === 'list' ? 'property_card_list' : 'property_card_grid';
+    // ─────────────────────────────────────────────────────────────────────────
+
     // Generate WhatsApp message
     const generateWhatsAppMessage = () => {
         const propertyUrl = `${window.location.origin}/properties/${property.id}`;
@@ -65,6 +88,7 @@ export function PropertyCardOption1({ property, viewMode = 'grid' }) {
     const handleWhatsAppClick = (e) => {
         e.preventDefault();
         e.stopPropagation();
+        metaPixelEvents.whatsappClick(cardLocation, contactContext);
         const message = generateWhatsAppMessage();
         window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
     };
@@ -72,6 +96,7 @@ export function PropertyCardOption1({ property, viewMode = 'grid' }) {
     const handleCallClick = (e) => {
         e.preventDefault();
         e.stopPropagation();
+        metaPixelEvents.phoneClick(cardLocation, contactContext);
         window.location.href = `tel:${phoneNumber}`;
     };
 
@@ -81,6 +106,8 @@ export function PropertyCardOption1({ property, viewMode = 'grid' }) {
 
         const url = `${window.location.origin}/properties/${property.id}`;
         const text = `Check out this property: ${title}`;
+
+        metaPixelEvents.socialShare(platform, 'property', property.id);
 
         switch (platform) {
             case 'whatsapp':
@@ -113,7 +140,7 @@ export function PropertyCardOption1({ property, viewMode = 'grid' }) {
                 transition={{ duration: 0.3 }}
                 className="relative"
             >
-                <Link to={`/properties/${property.id}`}>
+                <Link to={`/properties/${property.id}`} onClick={trackCardView}>
                     <div className="relative bg-secondary-950 overflow-hidden border border-secondary-800 hover:border-primary-500/50 transition-all duration-300 shadow-lg hover:shadow-2xl group">
                         {/* Diagonal Top Right Accent */}
                         <div
@@ -335,7 +362,7 @@ export function PropertyCardOption1({ property, viewMode = 'grid' }) {
             transition={{ duration: 0.3 }}
             className="relative group"
         >
-            <Link to={`/properties/${property.id}`}>
+            <Link to={`/properties/${property.id}`} onClick={trackCardView}>
                 <div className="relative bg-secondary-950 overflow-hidden border border-secondary-800 hover:border-primary-500/50 transition-all duration-300 shadow-lg hover:shadow-xl">
                     <div className="flex flex-col md:flex-row">
                         {/* Image Container */}
@@ -551,13 +578,18 @@ export function PropertyCardOption3({ property, viewMode = 'grid' }) {
         e.preventDefault();
         e.stopPropagation();
 
-        // Track WhatsApp contact event with property context
-        metaPixelEvents.whatsappClick(phoneNumber, viewMode === 'list' ? 'property_card_list' : 'property_card_grid');
-        metaPixelEvents.contact('whatsapp', {
-            property_id: property.id,
-            property_name: title,
-            property_price: property.price,
-        });
+        // Track WhatsApp contact event with property context.
+        // The phone number is never sent — whatsappClick already emits the
+        // standard Contact event, so no separate contact() call is needed.
+        metaPixelEvents.whatsappClick(
+            viewMode === 'list' ? 'property_card_list' : 'property_card_grid',
+            {
+                property_id: property.id,
+                property_name: title,
+                value: property.price,
+                currency: 'EGP',
+            }
+        );
 
         const message = generateWhatsAppMessage();
         window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
@@ -567,13 +599,17 @@ export function PropertyCardOption3({ property, viewMode = 'grid' }) {
         e.preventDefault();
         e.stopPropagation();
 
-        // Track phone call contact event with property context
-        metaPixelEvents.phoneClick(phoneNumber, viewMode === 'list' ? 'property_card_list' : 'property_card_grid');
-        metaPixelEvents.contact('phone', {
-            property_id: property.id,
-            property_name: title,
-            property_price: property.price,
-        });
+        // Track phone call contact event with property context.
+        // phoneClick already emits the standard Contact event.
+        metaPixelEvents.phoneClick(
+            viewMode === 'list' ? 'property_card_list' : 'property_card_grid',
+            {
+                property_id: property.id,
+                property_name: title,
+                value: property.price,
+                currency: 'EGP',
+            }
+        );
 
         window.location.href = `tel:${phoneNumber}`;
     };

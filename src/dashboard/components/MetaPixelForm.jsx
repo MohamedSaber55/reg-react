@@ -17,7 +17,14 @@ const validationSchema = Yup.object({
     googleAnalyticsId: Yup.string()
         .optional()
         .max(20, 'Google Analytics ID must be less than 20 characters')
-        .matches(/^(UA-|G-|GTM-)?[A-Z0-9-]+$/i, 'Invalid Google Analytics ID format')
+        // excludeEmptyString is required: Yup tests "" against the pattern by
+        // default, so leaving this optional field blank would otherwise block
+        // the form. The pattern also requires a real GA/GTM prefix, so an
+        // invalid ID can't be saved and injected as a broken tag.
+        .matches(
+            /^(G-[A-Z0-9]+|UA-\d+-\d+|GTM-[A-Z0-9]+)$/i,
+            { message: 'Invalid Google Analytics ID format', excludeEmptyString: true }
+        )
 });
 
 const MetaPixelForm = ({

@@ -6,6 +6,8 @@ import { Toaster } from 'react-hot-toast';
 import '@/utils/i18n';
 import { LanguageLoadingProvider } from '@/components/common/LanguageLoadingOverlay';
 import { useTranslation } from 'react-i18next';
+import TrackingPixels from '@/components/TrackingPixels';
+import RouteTracking from '@/components/tracking/RouteTracking';
 
 // Layouts
 import MainLayout from '@/layouts/MainLayout';
@@ -69,21 +71,47 @@ import TrackingPage from '@/pages/dashboard/TrackingPage';
 import UnitModelImagesPage from '@/pages/dashboard/UnitModelImagesPage';
 import UnitModelsPage from '@/pages/dashboard/UnitModelsPage';
 
-// Scroll to top on route change
+// Scroll to top on route change, or to the anchor when the URL carries a hash.
+// Without the hash branch, links like /about-us#services land at the top of the
+// page and look broken.
 function ScrollToTop() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   useEffect(() => {
+    if (hash) {
+      // The target may not be mounted yet on a fresh navigation (data still
+      // loading), so retry on the next frame before giving up.
+      const scrollToAnchor = () => {
+        const el = document.getElementById(hash.slice(1));
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          return true;
+        }
+        return false;
+      };
+
+      if (scrollToAnchor()) return;
+
+      const frame = requestAnimationFrame(() => {
+        if (!scrollToAnchor()) window.scrollTo(0, 0);
+      });
+      return () => cancelAnimationFrame(frame);
+    }
+
     window.scrollTo(0, 0);
-  }, [pathname]);
+  }, [pathname, hash]);
   return null;
 }
 
 export default function App() {
   return (
     <Provider store={store}>
+      {/* Injects the Meta Pixel / GA tags configured in Dashboard → Tracking */}
+      <TrackingPixels />
       <LanguageLoadingProvider>
         <BrowserRouter>
           <ScrollToTop />
+          {/* Fires one named PageView per route change — see RouteTracking */}
+          <RouteTracking />
           <Toaster position="top-right" />
           <Routes>
             {/* Main / public routes */}

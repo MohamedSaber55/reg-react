@@ -17,7 +17,7 @@ import {
 } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-    useComprehensivePageTracking,
+    usePageEngagementTracking,
     useSearchTracking
 } from '@/hooks/useMetaPixelPageView';
 import { metaPixelEvents } from '@/utils/metaPixelTracking';
@@ -44,13 +44,7 @@ export default function ProjectsPage() {
 
     // ─── Tracking hooks ───────────────────────────────────────────────────────
     // Comprehensive page tracking: page view + scroll depth + time on page
-    useComprehensivePageTracking('Projects Page', {
-        additionalParams: {
-            initial_search: localFilters.search || null,
-            initial_start_date: localFilters.startDate || null,
-            initial_end_date: localFilters.endDate || null,
-        }
-    });
+    usePageEngagementTracking('Projects Page');
 
     // Search & filter tracking helpers
     const { trackSearch, trackFilter, trackSort } = useSearchTracking();

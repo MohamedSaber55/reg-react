@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { TrackedLink } from '@/components/tracking';
 import { useTranslation } from 'react-i18next';
 import { FiChevronRight, FiHome } from 'react-icons/fi';
 
@@ -9,23 +9,29 @@ export default function Breadcrumb({ items }) {
 
     return (
         <nav className="flex items-center space-x-2 rtl:space-x-reverse text-sm text-third-500 mb-6">
-            <Link
-                to="/"
+            <TrackedLink
+                href="/"
+                trackName="Home"
+                trackEvent="nav"
+                trackLocation="breadcrumb"
                 className="flex items-center hover:text-primary-600 transition-colors"
             >
                 <FiHome className="w-4 h-4" />
-            </Link>
+            </TrackedLink>
 
             {items.map((item, index) => (
                 <React.Fragment key={index}>
                     <FiChevronRight className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
                     {item.href ? (
-                        <Link
-                            to={item.href}
+                        <TrackedLink
+                            href={item.href}
+                            trackName={item.label}
+                            trackEvent="nav"
+                            trackLocation="breadcrumb"
                             className="hover:text-primary-600 transition-colors"
                         >
                             {item.label}
-                        </Link>
+                        </TrackedLink>
                     ) : (
                         <span className="text-third-900 font-medium">
                             {item.label}

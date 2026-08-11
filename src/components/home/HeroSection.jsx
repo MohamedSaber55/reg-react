@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FiArrowRight, FiPlay, FiMapPin, FiHome, FiTrendingUp, FiCheck } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { TrackedLink } from '@/components/tracking';
 
 /* ============================================
    OPTION 1: MODERN CINEMATIC SPLIT
@@ -89,23 +89,29 @@ export function HeroOption1({ heroSection, isRTL, t, getLocalizedText }) {
 
                             <div className="flex flex-wrap gap-3">
                                 {heroSection.primaryCtaTitleEn && heroSection.primaryCtaUrl && (
-                                    <Link
-                                        to={heroSection.primaryCtaUrl}
+                                    <TrackedLink
+                                        href={heroSection.primaryCtaUrl}
+                                        trackName={getLocalizedText(heroSection, 'primaryCtaTitle')}
+                                        trackEvent="cta"
+                                        trackLocation="hero"
                                         className="group px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white rounded-none font-semibold flex items-center gap-2 transition-all relative overflow-hidden text-sm"
                                     >
                                         <span className="relative z-10">{getLocalizedText(heroSection, 'primaryCtaTitle')}</span>
                                         <FiArrowRight className={`relative z-10 transition-transform ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`} />
                                         <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                                    </Link>
+                                    </TrackedLink>
                                 )}
                                 {heroSection.secondaryCtaTitleEn && heroSection.secondaryCtaUrl && (
-                                    <Link
-                                        to={heroSection.secondaryCtaUrl}
+                                    <TrackedLink
+                                        href={heroSection.secondaryCtaUrl}
+                                        trackName={getLocalizedText(heroSection, 'secondaryCtaTitle')}
+                                        trackEvent="cta"
+                                        trackLocation="hero"
                                         className="px-6 py-3 border border-white text-white hover:bg-white hover:text-neutral-950 rounded-none font-semibold flex items-center gap-2 transition-all text-sm"
                                     >
                                         <FiPlay />
                                         {getLocalizedText(heroSection, 'secondaryCtaTitle')}
-                                    </Link>
+                                    </TrackedLink>
                                 )}
                             </div>
                         </motion.div>
@@ -250,8 +256,11 @@ export function HeroOption2({ heroSection, isRTL, t, getLocalizedText }) {
 
                     <div className="flex flex-wrap gap-4 mb-8">
                         {heroSection.primaryCtaTitleEn && heroSection.primaryCtaUrl && (
-                            <Link
-                                to={heroSection.primaryCtaUrl}
+                            <TrackedLink
+                                href={heroSection.primaryCtaUrl}
+                                        trackName={getLocalizedText(heroSection, 'primaryCtaTitle')}
+                                        trackEvent="cta"
+                                        trackLocation="hero"
                                 className="inline-block px-8 py-3 bg-neutral-900 text-neutral-50 text-lg font-bold hover:bg-neutral-900/80 transition-colors relative group"
                             >
                                 <span className="relative z-10 flex items-center gap-2">
@@ -259,12 +268,15 @@ export function HeroOption2({ heroSection, isRTL, t, getLocalizedText }) {
                                     <FiArrowRight className={isRTL ? 'rotate-180' : ''} />
                                 </span>
                                 <div className={`absolute inset-0 border-2 border-neutral-900 ${isRTL ? 'translate-x-1' : 'translate-x-1'} translate-y-1 group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-transform`} />
-                            </Link>
+                            </TrackedLink>
                         )}
 
                         {heroSection.secondaryCtaTitleEn && heroSection.secondaryCtaUrl && (
-                            <Link
-                                to={heroSection.secondaryCtaUrl}
+                            <TrackedLink
+                                href={heroSection.secondaryCtaUrl}
+                                        trackName={getLocalizedText(heroSection, 'secondaryCtaTitle')}
+                                        trackEvent="cta"
+                                        trackLocation="hero"
                                 className="inline-block px-8 py-3 bg-neutral-50 border-2 border-neutral-900 text-third-900 text-lg font-bold hover:bg-neutral-100 transition-colors relative group"
                             >
                                 <span className="relative z-10 flex items-center gap-2">
@@ -272,7 +284,7 @@ export function HeroOption2({ heroSection, isRTL, t, getLocalizedText }) {
                                     {getLocalizedText(heroSection, 'secondaryCtaTitle')}
                                 </span>
                                 <div className={`absolute inset-0 border-2 border-neutral-900 ${isRTL ? 'translate-x-1' : 'translate-x-1'} translate-y-1 group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-transform`} />
-                            </Link>
+                            </TrackedLink>
                         )}
                     </div>
 
@@ -362,22 +374,28 @@ export function HeroOption3({ heroSection, isRTL, t, getLocalizedText }) {
 
                         <div className="flex flex-wrap gap-3 mb-6">
                             {heroSection.primaryCtaTitleEn && heroSection.primaryCtaUrl && (
-                                <Link
-                                    to={heroSection.primaryCtaUrl}
+                                <TrackedLink
+                                    href={heroSection.primaryCtaUrl}
+                                        trackName={getLocalizedText(heroSection, 'primaryCtaTitle')}
+                                        trackEvent="cta"
+                                        trackLocation="hero"
                                     className="group px-6 py-3 w-full md:w-fit justify-center bg-linear-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white rounded-full font-semibold flex items-center gap-2 shadow-lg shadow-primary-500/30 transition-all hover:scale-105 text-sm"
                                 >
                                     {getLocalizedText(heroSection, 'primaryCtaTitle')}
                                     <FiArrowRight className={`transition-transform ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`} />
-                                </Link>
+                                </TrackedLink>
                             )}
                             {heroSection.secondaryCtaTitleEn && heroSection.secondaryCtaUrl && (
-                                <Link
-                                    to={heroSection.secondaryCtaUrl}
+                                <TrackedLink
+                                    href={heroSection.secondaryCtaUrl}
+                                        trackName={getLocalizedText(heroSection, 'secondaryCtaTitle')}
+                                        trackEvent="cta"
+                                        trackLocation="hero"
                                     className="px-6 py-3 w-full md:w-fit justify-center bg-neutral-50/60 backdrop-blur-sm hover:bg-neutral-50/80 text-neutral-900 rounded-full font-semibold flex items-center gap-2 border border-primary-300/50 transition-all text-sm"
                                 >
                                     <FiPlay />
                                     {getLocalizedText(heroSection, 'secondaryCtaTitle')}
-                                </Link>
+                                </TrackedLink>
                             )}
                         </div>
 
@@ -535,22 +553,28 @@ export function HeroOption4({ heroSection, isRTL, t, getLocalizedText }) {
 
                         <div className="flex flex-wrap gap-3 justify-center mb-8">
                             {heroSection.primaryCtaTitleEn && heroSection.primaryCtaUrl && (
-                                <Link
-                                    to={heroSection.primaryCtaUrl}
+                                <TrackedLink
+                                    href={heroSection.primaryCtaUrl}
+                                        trackName={getLocalizedText(heroSection, 'primaryCtaTitle')}
+                                        trackEvent="cta"
+                                        trackLocation="hero"
                                     className="group px-6 py-3 bg-linear-to-r from-primary-600 to-accent-600 hover:from-primary-700 hover:to-accent-700 text-white rounded-xl font-semibold flex items-center gap-2 shadow-lg shadow-primary-500/30 transition-all hover:scale-105 text-sm"
                                 >
                                     {getLocalizedText(heroSection, 'primaryCtaTitle')}
                                     <FiArrowRight className={`transition-transform ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`} />
-                                </Link>
+                                </TrackedLink>
                             )}
                             {heroSection.secondaryCtaTitleEn && heroSection.secondaryCtaUrl && (
-                                <Link
-                                    to={heroSection.secondaryCtaUrl}
+                                <TrackedLink
+                                    href={heroSection.secondaryCtaUrl}
+                                        trackName={getLocalizedText(heroSection, 'secondaryCtaTitle')}
+                                        trackEvent="cta"
+                                        trackLocation="hero"
                                     className="px-6 py-3 bg-white/10 backdrop-blur-md hover:bg-white/20 text-white rounded-xl font-semibold flex items-center gap-2 border border-white/20 transition-all text-sm"
                                 >
                                     <FiPlay />
                                     {getLocalizedText(heroSection, 'secondaryCtaTitle')}
-                                </Link>
+                                </TrackedLink>
                             )}
                         </div>
                     </motion.div>

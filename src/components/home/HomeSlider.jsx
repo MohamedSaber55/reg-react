@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { TrackedLink } from '@/components/tracking';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay, EffectFade } from 'swiper/modules';
 import { FiChevronLeft, FiChevronRight, FiPlay, FiPause, FiMaximize, FiMinimize } from 'react-icons/fi';
@@ -175,7 +175,13 @@ export function SliderOption1({
                                             className="relative w-full h-64 md:h-80 lg:h-100"
                                         >
                                             {slideImage.image.link ? (
-                                                <Link to={slideImage.image.link}>
+                                                <TrackedLink
+                                                href={slideImage.image.link}
+                                                trackName={slideImage.image.title || 'Slider Banner'}
+                                                trackEvent="cta"
+                                                trackLocation="home_slider"
+                                                additionalParams={{ slide_id: slideImage.image.id }}
+                                            >
                                                     <div className="relative group h-full">
                                                         <img
                                                             src={slideImage.image.imageUrl}
@@ -198,7 +204,7 @@ export function SliderOption1({
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </Link>
+                                                </TrackedLink>
                                             ) : (
                                                 <>
                                                     <img
@@ -372,7 +378,13 @@ export function SliderOption2({
                                         <SwiperSlide key={slideImage.image.id}>
                                             <div className="relative h-64 md:h-80 lg:h-100">
                                                 {slideImage.image.link ? (
-                                                    <Link to={slideImage.image.link}>
+                                                    <TrackedLink
+                                                href={slideImage.image.link}
+                                                trackName={slideImage.image.title || 'Slider Banner'}
+                                                trackEvent="cta"
+                                                trackLocation="home_slider"
+                                                additionalParams={{ slide_id: slideImage.image.id }}
+                                            >
                                                         <div className="relative h-full">
                                                             <img
                                                                 src={slideImage.image.imageUrl}
@@ -391,7 +403,7 @@ export function SliderOption2({
                                                                 )}
                                                             </div>
                                                         </div>
-                                                    </Link>
+                                                    </TrackedLink>
                                                 ) : (
                                                     <>
                                                         <img
@@ -559,7 +571,13 @@ export function SliderOption3({
                                         className="relative h-64 md:h-80 lg:h-100"
                                     >
                                         {slideImage.image.link ? (
-                                            <Link to={slideImage.image.link}>
+                                            <TrackedLink
+                                                href={slideImage.image.link}
+                                                trackName={slideImage.image.title || 'Slider Banner'}
+                                                trackEvent="cta"
+                                                trackLocation="home_slider"
+                                                additionalParams={{ slide_id: slideImage.image.id }}
+                                            >
                                                 <div className="relative group h-full">
                                                     <img
                                                         src={slideImage.image.imageUrl}
@@ -567,11 +585,17 @@ export function SliderOption3({
                                                         className="w-full h-full object-cover rounded-2xl"
                                                     />
                                                 </div>
-                                            </Link>
+                                            </TrackedLink>
                                         ) : (
                                             <>
                                                 {slideImage.image.link ? (
-                                                    <Link to={slideImage.image.link}>
+                                                    <TrackedLink
+                                                href={slideImage.image.link}
+                                                trackName={slideImage.image.title || 'Slider Banner'}
+                                                trackEvent="cta"
+                                                trackLocation="home_slider"
+                                                additionalParams={{ slide_id: slideImage.image.id }}
+                                            >
                                                         <div className="relative group h-full">
                                                             <img
                                                                 src={slideImage.image.imageUrl}
@@ -579,7 +603,7 @@ export function SliderOption3({
                                                                 className="w-full h-full object-cover rounded-2xl"
                                                             />
                                                         </div>
-                                                    </Link>
+                                                    </TrackedLink>
                                                 ) : (
                                                     <img
                                                         src={slideImage.image.imageUrl}
@@ -758,7 +782,13 @@ export function SliderOption4({
                                         className="relative h-64 md:h-80 lg:h-100"
                                     >
                                         {slideImage.image.link ? (
-                                            <Link to={slideImage.image.link}>
+                                            <TrackedLink
+                                                href={slideImage.image.link}
+                                                trackName={slideImage.image.title || 'Slider Banner'}
+                                                trackEvent="cta"
+                                                trackLocation="home_slider"
+                                                additionalParams={{ slide_id: slideImage.image.id }}
+                                            >
                                                 <div className="relative group h-full">
                                                     <img
                                                         src={slideImage.image.imageUrl}
@@ -781,7 +811,7 @@ export function SliderOption4({
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </Link>
+                                            </TrackedLink>
                                         ) : (
                                             <>
                                                 <img

@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FiArrowRight, FiCheck, FiAward, FiUsers, FiTrendingUp } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { TrackedLink } from '@/components/tracking';
 
 /* ============================================
    OPTION 1: MODERN CINEMATIC (Matches Hero Option 1)
@@ -111,13 +111,16 @@ export function AboutOption1({ aboutSection, heroSection, isRTL, t, getLocalized
                         </p>
 
                         {/* CTA Button */}
-                        <Link
-                            to="/about-us"
+                        <TrackedLink
+                            href="/about-us"
+                            trackName={t('home.cta.learnMore', 'Learn More')}
+                            trackEvent="cta"
+                            trackLocation="about_section"
                             className="inline-flex items-center gap-2 px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white font-semibold transition-all hover:scale-105 group text-sm"
                         >
                             {t('home.cta.learnMore', 'Learn More')}
                             <FiArrowRight className={`transition-transform ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`} />
-                        </Link>
+                        </TrackedLink>
                     </motion.div>
                 </div>
             </div>
@@ -227,8 +230,11 @@ export function AboutOption2({ aboutSection, heroSection, isRTL, t, getLocalized
                         )}
 
                         {/* CTA */}
-                        <Link
-                            to="/about-us"
+                        <TrackedLink
+                            href="/about-us"
+                            trackName={t('home.cta.learnMore', 'Learn More')}
+                            trackEvent="cta"
+                            trackLocation="about_section"
                             className="inline-block relative group"
                         >
                             <div className="relative z-10 px-8 py-4 bg-neutral-900 text-neutral-50 font-bold border-4 border-neutral-900 flex items-center gap-2 text-sm">
@@ -236,7 +242,7 @@ export function AboutOption2({ aboutSection, heroSection, isRTL, t, getLocalized
                                 <FiArrowRight className={isRTL ? 'rotate-180' : ''} />
                             </div>
                             <div className={`absolute inset-0 border-4 border-neutral-900 ${isRTL ? 'translate-x-2' : 'translate-x-2'} translate-y-2 group-hover:translate-x-1 group-hover:translate-y-1 transition-transform`} />
-                        </Link>
+                        </TrackedLink>
                     </motion.div>
                 </div>
             </div>
@@ -348,13 +354,16 @@ export function AboutOption3({ aboutSection, heroSection, isRTL, t, getLocalized
                         )}
 
                         {/* CTA */}
-                        <Link
-                            to="/about-us"
+                        <TrackedLink
+                            href="/about-us"
+                            trackName={t('home.cta.learnMore', 'Learn More')}
+                            trackEvent="cta"
+                            trackLocation="about_section"
                             className="inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white rounded-full font-semibold shadow-lg shadow-primary-500/30 transition-all hover:scale-105 group text-sm"
                         >
                             {t('home.cta.learnMore', 'Learn More')}
                             <FiArrowRight className={`transition-transform ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`} />
-                        </Link>
+                        </TrackedLink>
                     </motion.div>
                 </div>
             </div>
@@ -426,13 +435,16 @@ export function AboutOption4({ aboutSection, heroSection, isRTL, t, getLocalized
                         </p>
 
                         {/* CTA */}
-                        <Link
-                            to="/about-us"
+                        <TrackedLink
+                            href="/about-us"
+                            trackName={t('home.cta.learnMore', 'Learn More')}
+                            trackEvent="cta"
+                            trackLocation="about_section"
                             className="inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-primary-600 to-accent-600 hover:from-primary-700 hover:to-accent-700 text-white rounded-xl font-semibold shadow-lg shadow-primary-500/30 transition-all hover:scale-105 group text-sm"
                         >
                             {t('home.cta.learnMore', 'Learn More')}
                             <FiArrowRight className={`transition-transform ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`} />
-                        </Link>
+                        </TrackedLink>
                     </motion.div>
 
                     {/* Image with Glass Stats */}

@@ -19,7 +19,7 @@ import {
 } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 import { toast } from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { TrackedLink } from '@/components/tracking';
 // Import Redux actions
 import { createTestimonial, clearError } from '@/store/slices/testimonialSlice';
 import { useAppSelector } from '@/hooks/redux';
@@ -236,18 +236,24 @@ export default function SubmitTestimonialPage() {
                         </div>
 
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <Link
-                                to="/"
+                            <TrackedLink
+                                href="/"
+                                trackName={t('testimonial.backToHome', 'Back to Home')}
+                                trackEvent="cta"
+                                trackLocation="rate_us_success"
                                 className="px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white font-medium rounded-lg transition-colors"
                             >
                                 {t('testimonial.backToHome', 'Back to Home')}
-                            </Link>
-                            <Link
-                                to="/testimonials"
+                            </TrackedLink>
+                            <TrackedLink
+                                href="/testimonials"
+                                trackName={t('testimonial.viewTestimonials', 'View All Testimonials')}
+                                trackEvent="cta"
+                                trackLocation="rate_us_success"
                                 className="px-6 py-3 bg-neutral-50 border border-neutral-400 text-third-900 font-medium rounded-lg hover:bg-neutral-100 transition-colors"
                             >
                                 {t('testimonial.viewTestimonials', 'View All Testimonials')}
-                            </Link>
+                            </TrackedLink>
                         </div>
 
                         <p className="text-sm text-third-400 mt-8">

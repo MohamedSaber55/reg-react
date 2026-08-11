@@ -1,5 +1,5 @@
 // app/(main)/properties/[id]/PropertyDetailsClient.jsx
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
@@ -34,6 +34,11 @@ import 'swiper/css/thumbs';
 import 'swiper/css/free-mode';
 import { FaElevator } from 'react-icons/fa6';
 import { toast } from 'react-hot-toast';
+import {
+    usePageEngagementTracking,
+    useContentViewOnLoad,
+    useFormTracking,
+} from '@/hooks/useMetaPixelPageView';
 // next/image removed;
 
 export default function PropertyDetailsClient({ propertyId }) {
@@ -56,6 +61,31 @@ export default function PropertyDetailsClient({ propertyId }) {
     const [showFullImage, setShowFullImage] = useState(false);
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
     const [alert, setAlert] = useState(null);
+
+    // ─── Tracking ────────────────────────────────────────────────────────────
+    // ViewContent must fire here, not only on the listing card click, so that
+    // visitors landing directly from an ad or a shared link are counted and
+    // become eligible for dynamic-ads remarketing.
+    usePageEngagementTracking('Property Details');
+
+    useContentViewOnLoad(
+        'property',
+        currentProperty
+            ? {
+                id: currentProperty.id,
+                name: isRTL ? currentProperty.titleAr : currentProperty.titleEn,
+                type: currentProperty.propertyTypeName || 'property',
+                price: currentProperty.price,
+                currency: 'EGP',
+            }
+            : null
+    );
+
+    const { trackFormStart, trackFormSubmit, trackFormError } = useFormTracking(
+        'Property Inquiry Form',
+        'property_inquiry'
+    );
+    // ─────────────────────────────────────────────────────────────────────────
 
     // Get active images or use default
     const getActiveImages = () => {
@@ -158,6 +188,10 @@ Property ID: ${property.id}
 
                 await dispatch(createTicket(ticketData)).unwrap();
 
+                // Lead fires only after the ticket is actually created, so
+                // failed submissions never inflate the conversion count.
+                trackFormSubmit(true);
+
                 setAlert({
                     type: 'success',
                     message: t('property.messageSentSuccess', 'Your message has been sent successfully! We will contact you soon.')
@@ -175,6 +209,9 @@ Property ID: ${property.id}
 
             } catch (error) {
                 console.error('Error submitting form:', error);
+
+                trackFormSubmit(false);
+                trackFormError('submission_failed', String(error));
 
                 setAlert({
                     type: 'error',
@@ -205,6 +242,14 @@ Property ID: ${property.id}
             dispatch(clearCurrentProperty());
         };
     }, [dispatch, resolvedPropertyId]);
+
+    // FormStart should fire once per visit, on the first field focus.
+    const formStarted = useRef(false);
+    const handleFormStart = () => {
+        if (formStarted.current) return;
+        formStarted.current = true;
+        trackFormStart();
+    };
 
     const displayPhones = contactPhones.slice(0, 2);
     const displayEmails = contactEmails.slice(0, 2);
@@ -586,7 +631,11 @@ Property ID: ${property.id}
                                 </div>
                             )}
 
-                            <form onSubmit={formik.handleSubmit} className="space-y-4">
+                            <form
+                                onSubmit={formik.handleSubmit}
+                                onFocus={handleFormStart}
+                                className="space-y-4"
+                            >
                                 <div>
                                     <input
                                         type="text"

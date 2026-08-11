@@ -3,8 +3,15 @@ import { FiShare2, FiX, FiCopy, FiCheck } from 'react-icons/fi';
 import { FaFacebook, FaTwitter, FaWhatsapp, FaLinkedin } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'react-hot-toast';
+import { metaPixelEvents } from '@/utils/metaPixelTracking';
 
-export default function ShareButton({ title, description, url }) {
+export default function ShareButton({
+    title,
+    description,
+    url,
+    contentType = 'page',
+    contentId,
+}) {
     const [showModal, setShowModal] = useState(false);
     const [copied, setCopied] = useState(false);
 
@@ -15,6 +22,8 @@ export default function ShareButton({ title, description, url }) {
     const handleCopyLink = async () => {
         try {
             await navigator.clipboard.writeText(shareUrl);
+            // Only tracked once the copy actually succeeded.
+            metaPixelEvents.socialShare('copy_link', contentType, contentId);
             setCopied(true);
             toast.success('Link copied to clipboard!');
             setTimeout(() => setCopied(false), 2000);
@@ -50,15 +59,23 @@ export default function ShareButton({ title, description, url }) {
         }
     ];
 
-    const handleShare = (url) => {
+    const handleShare = (platform, url) => {
+        metaPixelEvents.socialShare(platform.toLowerCase(), contentType, contentId);
         window.open(url, '_blank', 'width=600,height=400');
         setShowModal(false);
+    };
+
+    const handleOpenShareModal = () => {
+        metaPixelEvents.buttonClick('Share', contentType, {
+            content_id: contentId,
+        });
+        setShowModal(true);
     };
 
     return (
         <>
             <button
-                onClick={() => setShowModal(true)}
+                onClick={handleOpenShareModal}
                 className="p-3 bg-neutral-100 rounded-xl hover:bg-primary-100 transition-all"
                 aria-label="Share"
             >
@@ -99,7 +116,7 @@ export default function ShareButton({ title, description, url }) {
                                 {shareOptions.map((option) => (
                                     <button
                                         key={option.name}
-                                        onClick={() => handleShare(option.url)}
+                                        onClick={() => handleShare(option.name, option.url)}
                                         className={`flex flex-col items-center gap-2 p-4 rounded-xl ${option.color} hover:opacity-90 transition-opacity text-white`}
                                     >
                                         <option.icon className="text-2xl" />

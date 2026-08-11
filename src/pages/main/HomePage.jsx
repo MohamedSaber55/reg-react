@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import {useNavigate} from 'react-router-dom';
 
 // Import tracking hook
-import { useComprehensivePageTracking } from '@/hooks/useMetaPixelPageView';
+import { usePageEngagementTracking } from '@/hooks/useMetaPixelPageView';
 import { metaPixelEvents } from '@/utils/metaPixelTracking';
 
 // Redux actions
@@ -36,10 +36,7 @@ export default function HomePage() {
   const isRTL = currentLang === 'ar';
 
   // Track page view, scroll depth, and time on page
-  useComprehensivePageTracking('Homepage', {
-    language: currentLang,
-    rtl: isRTL
-  });
+  usePageEngagementTracking('Homepage');
 
   const [localFilters, setLocalFilters] = useState({
     search: '',

@@ -2,57 +2,183 @@
 
 /**
  * Comprehensive Meta Pixel Tracking Utility
- * Tracks all user interactions across the website
+ * Tracks all user interactions across the website.
+ *
+ * Notes on the design:
+ * - The pixel is injected at runtime from the dashboard config (see
+ *   components/TrackingPixels.jsx), so it is NOT available on first paint.
+ *   Events fired before that are queued here and flushed once fbq exists,
+ *   instead of being dropped.
+ * - Every event carries an `eventID` so the same action sent from a server-side
+ *   Conversions API integration can be de-duplicated by Meta.
+ * - Parameters are scrubbed of personally identifiable information. Meta
+ *   prohibits raw PII in pixel parameters; it belongs in Advanced Matching
+ *   (hashed) or the Conversions API.
  */
 
+import { v4 as uuidv4 } from 'uuid';
+
+const DEBUG = import.meta.env.DEV;
+
+/** Default currency for this business (Egypt). */
+export const DEFAULT_CURRENCY = 'EGP';
+
+/** Cap the pre-init queue so a broken pixel config can't grow memory forever. */
+const MAX_QUEUED_EVENTS = 50;
+
+/**
+ * Parameter names that must never be sent to Meta in clear text.
+ * Defence in depth — call sites already avoid these.
+ */
+const PII_KEYS = new Set([
+    'email',
+    'em',
+    'e_mail',
+    'phone',
+    'phone_number',
+    'ph',
+    'mobile',
+    'first_name',
+    'last_name',
+    'full_name',
+    'fn',
+    'ln',
+    'address',
+    'street',
+    'ssn',
+    'date_of_birth',
+    'dob',
+]);
+
+/** Events fired before the pixel script finished loading. */
+let pendingEvents = [];
+
+const log = (...args) => {
+    if (DEBUG) console.log('[Meta Pixel]', ...args);
+};
+
 // Check if Meta Pixel is loaded
-const isPixelLoaded = () => typeof window !== 'undefined' && window.fbq;
+const isPixelLoaded = () =>
+    typeof window !== 'undefined' && typeof window.fbq === 'function';
+
+/**
+ * Drop PII keys and empty values from an event payload.
+ * @param {object} parameters
+ * @returns {object}
+ */
+const sanitizeParameters = (parameters = {}) => {
+    const clean = {};
+
+    Object.entries(parameters).forEach(([key, value]) => {
+        if (value === undefined || value === null || value === '') return;
+
+        if (PII_KEYS.has(key.toLowerCase())) {
+            if (DEBUG) {
+                console.warn(
+                    `[Meta Pixel] Dropped PII parameter "${key}". Use Advanced Matching or the Conversions API instead.`
+                );
+            }
+            return;
+        }
+
+        clean[key] = value;
+    });
+
+    return clean;
+};
+
+/**
+ * Low-level dispatcher. Queues the event when the pixel is not ready yet.
+ * @returns {string} the eventID, for Conversions API de-duplication
+ */
+const dispatch = (method, eventName, parameters = {}) => {
+    const payload = sanitizeParameters(parameters);
+    const eventID = uuidv4();
+
+    if (!isPixelLoaded()) {
+        if (pendingEvents.length < MAX_QUEUED_EVENTS) {
+            pendingEvents.push({ method, eventName, payload, eventID });
+            log(`Queued (pixel not ready): ${eventName}`, payload);
+        }
+        return eventID;
+    }
+
+    window.fbq(method, eventName, payload, { eventID });
+    log(`${method === 'track' ? 'Standard' : 'Custom'} Event: ${eventName}`, payload);
+
+    return eventID;
+};
+
+/**
+ * Send everything that was queued before the pixel finished loading.
+ * Called by TrackingPixels once fbq('init') has run.
+ */
+export const flushPixelQueue = () => {
+    if (!isPixelLoaded() || pendingEvents.length === 0) return;
+
+    const queued = pendingEvents;
+    pendingEvents = [];
+
+    queued.forEach(({ method, eventName, payload, eventID }) => {
+        window.fbq(method, eventName, payload, { eventID });
+        log(`Flushed queued event: ${eventName}`, payload);
+    });
+};
+
+/**
+ * Grant tracking consent (GDPR). Call after the visitor accepts cookies.
+ * Only meaningful if consent was revoked first — see revokeTrackingConsent.
+ */
+export const grantTrackingConsent = () => {
+    if (isPixelLoaded()) window.fbq('consent', 'grant');
+};
+
+/**
+ * Revoke tracking consent (GDPR). Call before init to hold events back until
+ * the visitor opts in.
+ */
+export const revokeTrackingConsent = () => {
+    if (isPixelLoaded()) window.fbq('consent', 'revoke');
+};
 
 /**
  * Track standard Meta Pixel events
- * @param {string} eventName - Standard event name (e.g., 'Purchase', 'AddToCart', 'Lead')
+ * @param {string} eventName - Standard event name (e.g., 'Purchase', 'Lead')
  * @param {object} parameters - Optional event parameters
+ * @returns {string} eventID
  */
-export const trackStandardEvent = (eventName, parameters = {}) => {
-    if (isPixelLoaded()) {
-        window.fbq('track', eventName, parameters);
-        console.log(`[Meta Pixel] Standard Event: ${eventName}`, parameters);
-    } else {
-        console.warn(`[Meta Pixel] Not loaded - Event: ${eventName}`);
-    }
-};
+export const trackStandardEvent = (eventName, parameters = {}) =>
+    dispatch('track', eventName, parameters);
 
 /**
  * Track custom Meta Pixel events
  * @param {string} eventName - Custom event name
  * @param {object} parameters - Optional event parameters
+ * @returns {string} eventID
  */
-export const trackCustomEvent = (eventName, parameters = {}) => {
-    if (isPixelLoaded()) {
-        window.fbq('trackCustom', eventName, parameters);
-        console.log(`[Meta Pixel] Custom Event: ${eventName}`, parameters);
-    } else {
-        console.warn(`[Meta Pixel] Not loaded - Custom Event: ${eventName}`);
-    }
-};
+export const trackCustomEvent = (eventName, parameters = {}) =>
+    dispatch('trackCustom', eventName, parameters);
 
 /**
  * Track page views with detailed parameters
  */
-export const trackPageView = (pageName, additionalParams = {}) => {
+export const trackPageView = (pageName, additionalParams = {}) =>
     trackStandardEvent('PageView', {
         page_name: pageName,
         page_url: typeof window !== 'undefined' ? window.location.href : '',
         page_path: typeof window !== 'undefined' ? window.location.pathname : '',
-        ...additionalParams
+        ...additionalParams,
     });
-};
 
 /**
  * Comprehensive event tracking object
  * Organized by category for easy maintenance
  */
 export const metaPixelEvents = {
+
+    // Re-exposed so callers holding only this object can reach the primitives.
+    trackStandardEvent,
+    trackCustomEvent,
 
     // ==================== PAGE EVENTS ====================
 
@@ -68,20 +194,22 @@ export const metaPixelEvents = {
 
     // ==================== NAVIGATION EVENTS ====================
 
-    navClick: (linkText, destination, location = 'header') => {
+    navClick: (linkText, destination, location = 'header', context = {}) => {
         trackCustomEvent('NavClick', {
             link_text: linkText,
             destination: destination,
             location: location,
+            ...context,
             timestamp: new Date().toISOString()
         });
     },
 
-    footerNavClick: (linkText, destination) => {
+    footerNavClick: (linkText, destination, context = {}) => {
         trackCustomEvent('FooterNavClick', {
             link_text: linkText,
             destination: destination,
-            section: 'footer'
+            section: 'footer',
+            ...context
         });
     },
 
@@ -103,32 +231,41 @@ export const metaPixelEvents = {
         });
     },
 
-    ctaClick: (ctaName, destination, location) => {
+    ctaClick: (ctaName, destination, location, context = {}) => {
         trackCustomEvent('CTAClick', {
             cta_name: ctaName,
             destination: destination,
-            location: location
+            location: location,
+            ...context
         });
     },
 
     // ==================== FORM EVENTS ====================
 
+    /**
+     * Fired when the visitor first interacts with a form.
+     * Intentionally a custom event — starting a form is not a conversion, and
+     * mapping it onto a standard event corrupts campaign optimization.
+     */
     formStart: (formName, formType) => {
-        trackStandardEvent('InitiateCheckout', {
-            content_name: formName,
-            content_type: formType
-        });
         trackCustomEvent('FormStart', {
             form_name: formName,
             form_type: formType
         });
     },
 
+    /**
+     * Fired on form submission. The standard `Lead` event is only sent on
+     * success so failed submissions never inflate conversion counts.
+     */
     formSubmit: (formName, formType, success = true) => {
-        trackStandardEvent('Lead', {
-            content_name: formName,
-            status: success ? 'success' : 'error'
-        });
+        if (success) {
+            trackStandardEvent('Lead', {
+                content_name: formName,
+                content_category: formType
+            });
+        }
+
         trackCustomEvent('FormSubmit', {
             form_name: formName,
             form_type: formType,
@@ -146,11 +283,12 @@ export const metaPixelEvents = {
 
     // ==================== PROPERTY/REAL ESTATE SPECIFIC ====================
 
-    viewProperty: (propertyId, propertyName, propertyType, price, currency = 'USD') => {
+    viewProperty: (propertyId, propertyName, propertyType, price, currency = DEFAULT_CURRENCY) => {
         trackStandardEvent('ViewContent', {
-            content_ids: [propertyId],
+            content_ids: [String(propertyId)],
             content_name: propertyName,
-            content_type: propertyType,
+            content_type: 'product',
+            content_category: propertyType,
             value: price,
             currency: currency
         });
@@ -158,20 +296,34 @@ export const metaPixelEvents = {
 
     viewProject: (projectId, projectName, stageCount) => {
         trackStandardEvent('ViewContent', {
-            content_ids: [projectId],
+            content_ids: [String(projectId)],
             content_name: projectName,
-            content_type: 'project',
+            content_type: 'product',
+            content_category: 'project',
             stage_count: stageCount
         });
     },
 
-    viewUnitModel: (unitId, unitName, stageName, price, area, bedrooms, bathrooms) => {
+    viewStage: (stageId, stageName, projectName, unitCount) => {
         trackStandardEvent('ViewContent', {
-            content_ids: [unitId],
+            content_ids: [String(stageId)],
+            content_name: stageName,
+            content_type: 'product',
+            content_category: 'stage',
+            project_name: projectName,
+            unit_count: unitCount
+        });
+    },
+
+    viewUnitModel: (unitId, unitName, stageName, price, area, bedrooms, bathrooms, currency = DEFAULT_CURRENCY) => {
+        trackStandardEvent('ViewContent', {
+            content_ids: [String(unitId)],
             content_name: unitName,
-            content_type: 'unit_model',
+            content_type: 'product',
+            content_category: 'unit_model',
             stage_name: stageName,
             value: price,
+            currency: currency,
             area: area,
             bedrooms: bedrooms,
             bathrooms: bathrooms
@@ -200,51 +352,45 @@ export const metaPixelEvents = {
     },
 
     // ==================== CONTACT & LEAD EVENTS ====================
+    //
+    // Phone numbers and email addresses are deliberately NOT sent as
+    // parameters — Meta prohibits raw PII in pixel payloads.
 
     contact: (contactMethod, context = {}) => {
         trackStandardEvent('Contact', {
-            method: contactMethod,
+            contact_method: contactMethod,
             ...context
         });
     },
 
-    phoneClick: (phoneNumber, location) => {
-        trackCustomEvent('PhoneClick', {
-            phone_number: phoneNumber,
-            location: location
-        });
-        trackStandardEvent('Contact', { method: 'phone' });
+    phoneClick: (location, context = {}) => {
+        trackCustomEvent('PhoneClick', { location, ...context });
+        trackStandardEvent('Contact', { contact_method: 'phone', ...context });
     },
 
-    emailClick: (email, location) => {
-        trackCustomEvent('EmailClick', {
-            email: email,
-            location: location
-        });
-        trackStandardEvent('Contact', { method: 'email' });
+    emailClick: (location, context = {}) => {
+        trackCustomEvent('EmailClick', { location, ...context });
+        trackStandardEvent('Contact', { contact_method: 'email', ...context });
     },
 
-    whatsappClick: (phoneNumber, location) => {
-        trackCustomEvent('WhatsAppClick', {
-            phone_number: phoneNumber,
-            location: location
-        });
-        trackStandardEvent('Contact', { method: 'whatsapp' });
+    whatsappClick: (location, context = {}) => {
+        trackCustomEvent('WhatsAppClick', { location, ...context });
+        trackStandardEvent('Contact', { contact_method: 'whatsapp', ...context });
     },
 
     // ==================== E-COMMERCE EVENTS ====================
 
-    addToCart: (productName, productId, value, currency = 'USD') => {
+    addToCart: (productName, productId, value, currency = DEFAULT_CURRENCY) => {
         trackStandardEvent('AddToCart', {
             content_name: productName,
-            content_ids: [productId],
+            content_ids: [String(productId)],
             content_type: 'product',
             value: value,
             currency: currency
         });
     },
 
-    initiateCheckout: (value, currency = 'USD', numItems = 1) => {
+    initiateCheckout: (value, currency = DEFAULT_CURRENCY, numItems = 1) => {
         trackStandardEvent('InitiateCheckout', {
             value: value,
             currency: currency,
@@ -252,13 +398,13 @@ export const metaPixelEvents = {
         });
     },
 
-    purchase: (value, currency = 'USD', orderId, products = []) => {
+    purchase: (value, currency = DEFAULT_CURRENCY, orderId, products = []) => {
         trackStandardEvent('Purchase', {
             value: value,
             currency: currency,
             order_id: orderId,
             content_type: 'product',
-            content_ids: products.map(p => p.id),
+            content_ids: products.map(p => String(p.id)),
             num_items: products.length
         });
     },
@@ -279,15 +425,23 @@ export const metaPixelEvents = {
         });
     },
 
+    elementVisible: (elementName, pageName) => {
+        trackCustomEvent('ElementVisible', {
+            element_name: elementName,
+            page_name: pageName,
+            timestamp: new Date().toISOString()
+        });
+    },
+
     videoPlay: (videoName, videoId) => {
-        trackStandardEvent('StartTrial', {
+        trackCustomEvent('VideoPlay', {
             content_name: videoName,
-            content_ids: [videoId]
+            content_ids: [String(videoId)]
         });
     },
 
     downloadResource: (resourceName, resourceType) => {
-        trackStandardEvent('CompleteRegistration', {
+        trackCustomEvent('DownloadResource', {
             content_name: resourceName,
             content_type: resourceType
         });
@@ -314,7 +468,7 @@ export const metaPixelEvents = {
     // ==================== TESTIMONIAL EVENTS ====================
 
     testimonialSubmit: (rating, hasComment) => {
-        trackStandardEvent('CompleteRegistration', {
+        trackCustomEvent('TestimonialSubmit', {
             content_name: 'Testimonial Submission',
             rating: rating,
             has_comment: hasComment
@@ -329,10 +483,13 @@ export const metaPixelEvents = {
     },
 
     // ==================== AUTHENTICATION EVENTS ====================
+    //
+    // Dashboard auth is staff activity, not a marketing conversion — custom
+    // events only, so it never feeds campaign optimization.
 
     login: (method = 'email', success = true) => {
-        trackStandardEvent('CompleteRegistration', {
-            registration_method: method,
+        trackCustomEvent('Login', {
+            login_method: method,
             status: success ? 'success' : 'error'
         });
     },
@@ -356,11 +513,12 @@ export const metaPixelEvents = {
 
     // ==================== EXTERNAL LINKS ====================
 
-    externalLinkClick: (linkName, destination, location) => {
+    externalLinkClick: (linkName, destination, location, context = {}) => {
         trackCustomEvent('ExternalLinkClick', {
             link_name: linkName,
             destination: destination,
-            location: location
+            location: location,
+            ...context
         });
     }
 };
@@ -378,6 +536,7 @@ export const {
     formError,
     viewProperty,
     viewProject,
+    viewStage,
     viewUnitModel,
     propertySearch,
     filterProperties,
@@ -391,6 +550,7 @@ export const {
     purchase,
     scrollDepth,
     timeOnPage,
+    elementVisible,
     videoPlay,
     downloadResource,
     socialShare,

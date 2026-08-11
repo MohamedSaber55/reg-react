@@ -30,7 +30,7 @@ import {
 } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-    useComprehensivePageTracking,
+    usePageEngagementTracking,
     useSearchTracking,
 } from '@/hooks/useMetaPixelPageView';
 import { metaPixelEvents } from '@/utils/metaPixelTracking';
@@ -77,13 +77,7 @@ export default function PropertiesPage() {
 
     // ==================== TRACKING HOOKS ====================
     // Comprehensive page tracking: page view + scroll depth milestones + time on page
-    useComprehensivePageTracking('Properties Page', {
-        additionalParams: {
-            initial_search: localFilters.search || null,
-            initial_property_type: localFilters.propertyTypeId || null,
-            initial_transaction_type: localFilters.transactionTypeId || null,
-        }
-    });
+    usePageEngagementTracking('Properties Page');
 
     // Search & filter tracking helpers
     const { trackSearch, trackFilter } = useSearchTracking();

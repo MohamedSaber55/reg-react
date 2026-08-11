@@ -1,9 +1,17 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { TrackedLink } from '@/components/tracking';
 import { FiCalendar, FiHome, FiChevronRight } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 
-export function StageCard({ stage, projectName }) {
+/**
+ * NOTE: ProjectDetailsClient currently renders its own local StageCard, so this
+ * component is not mounted anywhere today. It is kept working rather than
+ * deleted because it is the general-purpose version.
+ *
+ * The units link needs a project id: the route is
+ * /projects/:id/stages/:stageId, not /projects/stages/:stageId.
+ */
+export function StageCard({ stage, projectId, projectName }) {
     const formatDate = (dateString) => {
         if (!dateString) return 'TBA';
         try {
@@ -19,6 +27,9 @@ export function StageCard({ stage, projectName }) {
     };
 
     const unitModelsCount = stage.unitModels?.length || 0;
+
+    // Prefer the explicit prop, fall back to the id carried on the stage itself.
+    const resolvedProjectId = projectId ?? stage.projectId;
 
     return (
         <motion.div
@@ -70,15 +81,25 @@ export function StageCard({ stage, projectName }) {
                 </div>
             </div>
 
-            {/* View Units Button */}
-            {unitModelsCount > 0 && (
-                <Link
-                    to={`/projects/stages/${stage.id}`}
+            {/* View Units Button — omitted without a project id rather than
+                rendering a link that would 404. */}
+            {unitModelsCount > 0 && resolvedProjectId && (
+                <TrackedLink
+                    href={`/projects/${resolvedProjectId}/stages/${stage.id}`}
+                    trackName="View Units"
+                    trackEvent="cta"
+                    trackLocation="stage_card"
+                    additionalParams={{
+                        project_id: resolvedProjectId,
+                        stage_id: stage.id,
+                        stage_name: stage.name,
+                        unit_count: unitModelsCount,
+                    }}
                     className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-primary-500 hover:bg-primary-600 text-white font-medium rounded-lg transition-colors"
                 >
                     View {unitModelsCount} Units
                     <FiChevronRight className="text-lg" />
-                </Link>
+                </TrackedLink>
             )}
         </motion.div>
     );

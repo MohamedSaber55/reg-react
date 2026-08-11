@@ -1,6 +1,6 @@
 // app/components/FeaturedProjects.jsx
 import React, { useEffect } from 'react';
-import {Link} from 'react-router-dom';
+import { TrackedLink } from '@/components/tracking';
 // next/image removed;
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { fetchProjects } from '@/store/slices/projectSlice';
@@ -120,13 +120,17 @@ export default function FeaturedProjects() {
                                     </div>
 
                                     {/* CTA Button */}
-                                    <Link
-                                        to={`/projects/${project.id}`}
+                                    <TrackedLink
+                                        href={`/projects/${project.id}`}
+                                        trackName={t("projects.featuredProjects.viewDetails", "View Details")}
+                                        trackEvent="cta"
+                                        trackLocation="featured_projects"
+                                        additionalParams={{ project_id: project.id, project_name: project.name }}
                                         className="inline-flex items-center gap-2 text-primary-600 font-semibold hover:text-primary-700 transition-colors group/btn"
                                     >
                                         {t("projects.featuredProjects.viewDetails", "View Details")}
                                         <FaArrowRight className={`w-4 h-4 group-hover/btn:translate-x-1 transition-transform  ${isRtl ? "rotate-y-180 " : ""}`} />
-                                    </Link>
+                                    </TrackedLink>
                                 </div>
                             </div>
                         );
@@ -135,13 +139,16 @@ export default function FeaturedProjects() {
 
                 {/* View All Button */}
                 <div className="text-center mt-12">
-                    <Link
-                        to="/projects"
+                    <TrackedLink
+                        href="/projects"
+                        trackName={t("projects.featuredProjects.viewAllProjects", "View All Projects")}
+                        trackEvent="cta"
+                        trackLocation="featured_projects"
                         className="inline-flex items-center gap-2 px-8 py-3 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition-colors"
                     >
                         {t("projects.featuredProjects.viewAllProjects", "View All Projects")}
                         <FaArrowRight className={`w-5 h-5 ${isRtl ? "rotate-y-180 " : ""}`} />
-                    </Link>
+                    </TrackedLink>
                 </div>
             </div>
         </section>

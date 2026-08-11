@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
@@ -30,6 +30,11 @@ import 'swiper/css/pagination';
 import 'swiper/css/thumbs';
 import 'swiper/css/free-mode';
 import { toast } from 'react-hot-toast';
+import {
+    usePageEngagementTracking,
+    useContentViewOnLoad,
+    useFormTracking,
+} from '@/hooks/useMetaPixelPageView';
 // next/image removed;
 
 export default function UnitModelDetailsClient({ projectId, stageId, unitId }) {
@@ -37,8 +42,9 @@ export default function UnitModelDetailsClient({ projectId, stageId, unitId }) {
     const params = useParams();
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const resolvedProjectId = typeof id === 'string' && id !== 'placeholder'
-        ? id
+    // params.id is the project segment of /projects/:id/stages/:stageId/units/:unitId
+    const resolvedProjectId = typeof params?.id === 'string' && params.id !== 'placeholder'
+        ? params.id
         : projectId;
     const resolvedStageId = typeof params?.stageId === 'string' && params.stageId !== 'placeholder'
         ? params.stageId
@@ -58,6 +64,39 @@ export default function UnitModelDetailsClient({ projectId, stageId, unitId }) {
     const [showFullImage, setShowFullImage] = useState(false);
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
     const [alert, setAlert] = useState(null);
+
+    // ─── Tracking ────────────────────────────────────────────────────────────
+    usePageEngagementTracking('Unit Model Details');
+
+    useContentViewOnLoad(
+        'unit_model',
+        currentUnitModel
+            ? {
+                id: currentUnitModel.id,
+                name: currentUnitModel.name,
+                stageName: currentUnitModel.stageName,
+                price: currentUnitModel.startingPrice,
+                area: currentUnitModel.area,
+                bedrooms: currentUnitModel.bedrooms,
+                bathrooms: currentUnitModel.bathrooms,
+                currency: 'EGP',
+            }
+            : null
+    );
+
+    const { trackFormStart, trackFormSubmit, trackFormError } = useFormTracking(
+        'Unit Inquiry Form',
+        'unit_inquiry'
+    );
+
+    // FormStart should fire once per visit, on the first field focus.
+    const formStarted = useRef(false);
+    const handleFormStart = () => {
+        if (formStarted.current) return;
+        formStarted.current = true;
+        trackFormStart();
+    };
+    // ─────────────────────────────────────────────────────────────────────────
 
     // Get active images or use default
     const getActiveImages = () => {
@@ -156,6 +195,9 @@ Unit Model ID: ${unit.id}
 
                 await dispatch(createTicket(ticketData)).unwrap();
 
+                // Lead fires only after the ticket is actually created.
+                trackFormSubmit(true);
+
                 setAlert({
                     type: 'success',
                     message: t('property.messageSentSuccess', 'Your message has been sent successfully! We will contact you soon.')
@@ -173,6 +215,9 @@ Unit Model ID: ${unit.id}
 
             } catch (error) {
                 console.error('Error submitting form:', error);
+
+                trackFormSubmit(false);
+                trackFormError('submission_failed', String(error));
 
                 setAlert({
                     type: 'error',
@@ -475,7 +520,11 @@ Unit Model ID: ${unit.id}
                                 </div>
                             )}
 
-                            <form onSubmit={formik.handleSubmit} className="space-y-4">
+                            <form
+                                onSubmit={formik.handleSubmit}
+                                onFocus={handleFormStart}
+                                className="space-y-4"
+                            >
                                 <div>
                                     <input
                                         type="text"

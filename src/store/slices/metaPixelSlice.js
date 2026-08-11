@@ -106,7 +106,12 @@ const metaPixelSlice = createSlice({
             state.pagination.pageNumber = action.payload.pageNumber;
             state.pagination.pageSize = action.payload.pageSize;
         },
-        toggleMetaPixelActive: (state) => {
+        // NOTE: local-only optimistic toggle — it does NOT persist to the API.
+        // Because the dashboard and the public site are the same SPA, calling
+        // this flips live pixel injection for the current session while the
+        // server still disagrees. Dispatch updateMetaPixel instead; this action
+        // is currently unused.
+        toggleMetaPixelActive: (state, action) => {
             const metaPixel = state.metaPixels.find(pixel => pixel.id === action.payload);
             if (metaPixel) {
                 metaPixel.isActive = !metaPixel.isActive;
@@ -122,7 +127,16 @@ const metaPixelSlice = createSlice({
             })
             .addCase(fetchMetaPixels.fulfilled, (state, action) => {
                 state.loading = false;
-                state.metaPixels = action.payload || [];
+                // Normalize to an array. The endpoint returns a bare array
+                // today, but every other reducer here calls unshift/findIndex/
+                // filter on this value — if the API ever wraps it in a
+                // pagination envelope, those would throw at runtime.
+                const payload = action.payload;
+                state.metaPixels = Array.isArray(payload)
+                    ? payload
+                    : Array.isArray(payload?.items)
+                        ? payload.items
+                        : [];
                 // If your API returns paginated data, update accordingly:
                 // state.pagination = {
                 //   totalCount: action.payload.totalCount,

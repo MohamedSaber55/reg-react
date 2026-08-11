@@ -10,6 +10,10 @@ import EmptyState from '@/components/common/EmptyState';
 import { FiPackage, FiLayers, FiCalendar, FiCheckCircle, FiXCircle } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 import { formatPrice } from '@/utils/priceUtils';
+import {
+    usePageEngagementTracking,
+    useContentViewOnLoad,
+} from '@/hooks/useMetaPixelPageView';
 
 export default function ProjectDetailsClient({ projectId }) {
     const { t, i18n } = useTranslation();
@@ -54,6 +58,21 @@ export default function ProjectDetailsClient({ projectId }) {
             }));
         }
     }, [selectedStage?.id, dispatch]);
+
+    // ─── Tracking ────────────────────────────────────────────────────────────
+    usePageEngagementTracking('Project Details');
+
+    useContentViewOnLoad(
+        'project',
+        currentProject
+            ? {
+                id: currentProject.id,
+                name: currentProject.name,
+                stageCount: currentProject.stages?.length || 0,
+            }
+            : null
+    );
+    // ─────────────────────────────────────────────────────────────────────────
 
     if (operationLoading || !currentProject) {
         return (

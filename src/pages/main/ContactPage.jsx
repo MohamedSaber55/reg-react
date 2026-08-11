@@ -47,7 +47,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'react-hot-toast';
 import { fetchSocialMediaLinks } from '@/store/slices/socialMediaLinksSlice';
-import { useComprehensivePageTracking, useFormTracking } from '@/hooks/useMetaPixelPageView';
+import { usePageEngagementTracking, useFormTracking } from '@/hooks/useMetaPixelPageView';
 
 export default function ContactUsPage() {
     const { t, i18n } = useTranslation();
@@ -77,10 +77,7 @@ export default function ContactUsPage() {
         { id: 4, nameEn: "Complaint", nameAr: "شكوى" }
     ];
 
-    useComprehensivePageTracking('Contact Us', {
-        language: currentLang,
-        rtl: isRTL
-    });
+    usePageEngagementTracking('Contact Us');
 
     // Form tracking
     const { trackFormStart, trackFormSubmit, trackFormError } = useFormTracking('Contact Form', 'contact');

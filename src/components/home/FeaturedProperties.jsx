@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { TrackedLink } from '@/components/tracking';
 import { motion } from 'framer-motion';
 import {
     FiChevronLeft,
@@ -162,13 +162,16 @@ export function FeaturedPropertiesOption1({
                     viewport={{ once: true }}
                     className="text-center mt-6"
                 >
-                    <Link
-                        to="/properties"
+                    <TrackedLink
+                        href="/properties"
+                        trackName={t('home.featuredProperties.viewAll', 'View All Properties')}
+                        trackEvent="cta"
+                        trackLocation="featured_properties"
                         className="group inline-flex items-center justify-center gap-3 px-8 py-3 bg-primary-500 hover:bg-primary-600 text-white font-semibold transition-all hover:scale-105 border border-primary-500 hover:border-primary-600 text-sm"
                     >
                         <span>{t('home.featuredProperties.viewAll', 'View All Properties')}</span>
                         <FiArrowRight className={`transition-transform ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`} />
-                    </Link>
+                    </TrackedLink>
                 </motion.div>
             </div>
 
@@ -335,14 +338,17 @@ export function FeaturedPropertiesOption2({
                     viewport={{ once: true }}
                     className="text-center mt-12 relative inline-block mx-auto group"
                 >
-                    <Link
-                        to="/properties"
+                    <TrackedLink
+                        href="/properties"
+                        trackName={t('home.featuredProperties.viewAll', 'View All Properties')}
+                        trackEvent="cta"
+                        trackLocation="featured_properties"
                         className="relative z-10 inline-flex items-center justify-center gap-3 px-8 py-3 bg-neutral-900 text-neutral-50 font-bold text-sm border-4 border-neutral-900 group-hover:bg-primary-600 group-hover:border-primary-600 transition-colors"
                     >
                         <FiHome className="text-lg" />
                         <span>{t('home.featuredProperties.viewAll', 'VIEW ALL PROPERTIES')}</span>
                         <FiArrowRight className={`text-lg ${isRTL ? 'rotate-180' : ''}`} />
-                    </Link>
+                    </TrackedLink>
                     <div className={`absolute inset-0 border-4 border-neutral-900 ${isRTL ? 'translate-x-2' : 'translate-x-2'} translate-y-2 group-hover:translate-x-1 group-hover:translate-y-1 transition-transform`} />
                 </motion.div>
             </div>
@@ -489,13 +495,16 @@ export function FeaturedPropertiesOption3({
                     viewport={{ once: true }}
                     className="text-center mt-6"
                 >
-                    <Link
-                        to="/properties"
+                    <TrackedLink
+                        href="/properties"
+                        trackName={t('home.featuredProperties.viewAll', 'View All Properties')}
+                        trackEvent="cta"
+                        trackLocation="featured_properties"
                         className="group inline-flex items-center justify-center gap-3 px-8 py-3 bg-linear-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white rounded-full font-semibold transition-all hover:scale-105 shadow-xl shadow-primary-500/30 text-sm"
                     >
                         <span>{t('home.featuredProperties.viewAll', 'View All Properties')}</span>
                         <FiArrowRight className={`transition-transform ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`} />
-                    </Link>
+                    </TrackedLink>
                 </motion.div>
             </div>
 
@@ -646,13 +655,16 @@ export function FeaturedPropertiesOption4({
                     viewport={{ once: true }}
                     className="text-center mt-12"
                 >
-                    <Link
-                        to="/properties"
+                    <TrackedLink
+                        href="/properties"
+                        trackName={t('home.featuredProperties.viewAll', 'View All Properties')}
+                        trackEvent="cta"
+                        trackLocation="featured_properties"
                         className="group inline-flex items-center justify-center gap-3 px-8 py-3 bg-linear-to-r from-primary-600 to-accent-600 hover:from-primary-700 hover:to-accent-700 text-white rounded-2xl font-semibold transition-all hover:scale-105 shadow-2xl shadow-primary-500/50 backdrop-blur-sm border border-white/20 text-sm"
                     >
                         <span>{t('home.featuredProperties.viewAll', 'View All Properties')}</span>
                         <FiArrowRight className={`transition-transform ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`} />
-                    </Link>
+                    </TrackedLink>
                 </motion.div>
             </div>
 
