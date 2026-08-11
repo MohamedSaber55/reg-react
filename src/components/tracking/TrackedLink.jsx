@@ -57,6 +57,8 @@ export const TrackedLink = ({
     // Check if external link
     const isExternal = href?.startsWith('http') || href?.startsWith('//');
 
+    // data-pixel-tracked tells the global click listener in MetaPixelTracker to
+    // skip this element — it already reports a richer, named event.
     if (isExternal) {
         return (
             <a
@@ -64,6 +66,7 @@ export const TrackedLink = ({
                 onClick={handleClick}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-pixel-tracked="true"
                 {...props}
             >
                 {children}
@@ -75,6 +78,7 @@ export const TrackedLink = ({
         <Link
             to={href}
             onClick={handleClick}
+            data-pixel-tracked="true"
             {...props}
         >
             {children}

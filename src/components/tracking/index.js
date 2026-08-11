@@ -2,7 +2,7 @@
 
 export { TrackedLink } from './TrackedLink';
 export { TrackedButton } from './TrackedButton';
-export { default as RouteTracking, resolveRoute, isTrackedRoute } from './RouteTracking';
+export { default as MetaPixelTracker, getPageEvent, getClickLabel, isTrackedRoute } from './MetaPixelTracker';
 export {
     TrackedPhoneLink,
     TrackedEmailLink,

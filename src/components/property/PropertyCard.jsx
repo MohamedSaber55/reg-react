@@ -140,7 +140,7 @@ export function PropertyCardOption1({ property, viewMode = 'grid' }) {
                 transition={{ duration: 0.3 }}
                 className="relative"
             >
-                <Link to={`/properties/${property.id}`} onClick={trackCardView}>
+                <Link to={`/properties/${property.id}`} onClick={trackCardView} data-track-label="Property Card">
                     <div className="relative bg-secondary-950 overflow-hidden border border-secondary-800 hover:border-primary-500/50 transition-all duration-300 shadow-lg hover:shadow-2xl group">
                         {/* Diagonal Top Right Accent */}
                         <div
@@ -362,7 +362,7 @@ export function PropertyCardOption1({ property, viewMode = 'grid' }) {
             transition={{ duration: 0.3 }}
             className="relative group"
         >
-            <Link to={`/properties/${property.id}`} onClick={trackCardView}>
+            <Link to={`/properties/${property.id}`} onClick={trackCardView} data-track-label="Property Card">
                 <div className="relative bg-secondary-950 overflow-hidden border border-secondary-800 hover:border-primary-500/50 transition-all duration-300 shadow-lg hover:shadow-xl">
                     <div className="flex flex-col md:flex-row">
                         {/* Image Container */}
@@ -628,6 +628,7 @@ export function PropertyCardOption3({ property, viewMode = 'grid' }) {
                 <Link
                     to={`/properties/${property.id}`}
                     onClick={trackCardView}
+                    data-track-label="Property Card"
                 >
                     <div className="relative bg-white rounded-2xl overflow-hidden border border-primary-300/50 hover:border-primary-500/70 transition-all duration-300">
                         {/* Image Container */}
@@ -752,6 +753,7 @@ export function PropertyCardOption3({ property, viewMode = 'grid' }) {
             <Link
                 to={`/properties/${property.id}`}
                 onClick={trackCardView}
+                data-track-label="Property Card"
             >
                 <div className="relative bg-linear-to-br from-primary-50 to-accent-50 rounded-2xl overflow-hidden border border-primary-300/50 hover:border-primary-500/70 transition-all duration-300 shadow-xl hover:shadow-2xl">
                     <div className="flex flex-col md:flex-row">

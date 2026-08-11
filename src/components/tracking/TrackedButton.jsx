@@ -44,9 +44,12 @@ export const TrackedButton = ({
         }
     };
 
+    // data-pixel-tracked tells the global click listener in MetaPixelTracker to
+    // skip this element — it already reports a richer, named event.
     return (
         <button
             onClick={handleClick}
+            data-pixel-tracked="true"
             {...props}
         >
             {children}

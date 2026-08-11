@@ -302,12 +302,12 @@ export const useSearchTracking = () => {
 /**
  * Engagement tracking for a page: scroll depth + time on page.
  *
- * PageView is deliberately NOT fired here. RouteTracking listens to the router
+ * PageView is deliberately NOT fired here. MetaPixelTracker listens to the router
  * and fires exactly one named PageView per route change, which is what stops
  * pages from being silently missed. Firing it here as well would double every
  * landing.
  *
- * @param {string} pageName - Human-readable page name, matching the RouteTracking table
+ * @param {string} pageName - Human-readable page name, matching the MetaPixelTracker table
  * @param {object} options - Configuration options
  * @param {number[]} options.scrollMilestones - Scroll depth milestones
  * @param {number[]} options.timeIntervals - Time intervals to track
@@ -324,7 +324,7 @@ export const usePageEngagementTracking = (pageName, options = {}) => {
 
 /**
  * @deprecated Use usePageEngagementTracking. Kept as an alias so any remaining
- * caller keeps working; it no longer fires PageView (RouteTracking owns that).
+ * caller keeps working; it no longer fires PageView (MetaPixelTracker owns that).
  */
 export const useComprehensivePageTracking = usePageEngagementTracking;
 

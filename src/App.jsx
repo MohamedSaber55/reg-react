@@ -7,7 +7,7 @@ import '@/utils/i18n';
 import { LanguageLoadingProvider } from '@/components/common/LanguageLoadingOverlay';
 import { useTranslation } from 'react-i18next';
 import TrackingPixels from '@/components/TrackingPixels';
-import RouteTracking from '@/components/tracking/RouteTracking';
+import MetaPixelTracker from '@/components/tracking/MetaPixelTracker';
 
 // Layouts
 import MainLayout from '@/layouts/MainLayout';
@@ -110,8 +110,8 @@ export default function App() {
       <LanguageLoadingProvider>
         <BrowserRouter>
           <ScrollToTop />
-          {/* Fires one named PageView per route change — see RouteTracking */}
-          <RouteTracking />
+          {/* Named page events + global click tracking — see MetaPixelTracker */}
+          <MetaPixelTracker />
           <Toaster position="top-right" />
           <Routes>
             {/* Main / public routes */}
