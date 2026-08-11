@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import {Link} from 'react-router-dom'
 import { useTranslation } from 'react-i18next';
-import { FaArrowLeft, FaHome, FaEnvelope, FaLock } from 'react-icons/fa'
+import { ArrowLeft as FaArrowLeft, Home as FaHome, Mail as FaEnvelope, Lock as FaLock } from 'lucide-react'
 
 export default function ErrorPage({
     statusCode = 404,

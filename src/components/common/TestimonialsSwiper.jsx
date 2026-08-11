@@ -13,7 +13,7 @@ import {
     FiCheckCircle,
     FiThumbsUp
 } from 'react-icons/fi';
-import { LuQuote } from 'react-icons/lu';
+import { Quote as LuQuote } from 'lucide-react';
 
 // Import Swiper styles
 import 'swiper/css';

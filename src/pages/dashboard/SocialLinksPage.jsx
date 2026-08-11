@@ -17,7 +17,7 @@ import {
     FaPinterest, FaReddit, FaMedium, FaTumblr, FaWeixin,
     FaLine, FaViber
 } from 'react-icons/fa';
-import { MdDomain } from 'react-icons/md';
+import { Building2 as MdDomain } from 'lucide-react';
 import { Button } from '@/components/common/Button';
 import { Input } from '@/components/common/Input';
 import { Spinner } from '@/components/common/Spinner';

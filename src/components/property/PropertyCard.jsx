@@ -12,7 +12,8 @@ import {
     FiHome,
     FiPhone
 } from 'react-icons/fi';
-import { FaBath, FaBed, FaWhatsapp } from 'react-icons/fa';
+import { Bath as FaBath, Bed as FaBed } from 'lucide-react';
+import { WhatsAppIcon as FaWhatsapp } from '@/components/icons/WhatsAppIcon';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppSelector } from '@/hooks/redux';
 import defaultPropertyImage from '/default-property.jpeg';

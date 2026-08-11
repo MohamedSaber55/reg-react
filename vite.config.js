@@ -30,7 +30,7 @@ export default defineConfig({
           'react-vendor': ['react', 'react-dom'],
           'router': ['react-router-dom'],
           'redux': ['@reduxjs/toolkit', 'react-redux'],
-          'ui': ['framer-motion', 'swiper', 'react-hot-toast', 'sweetalert2'],
+          'ui': ['framer-motion', 'swiper', 'react-hot-toast'],
           'forms': ['formik', 'yup'],
           'i18n': ['i18next', 'react-i18next'],
         },

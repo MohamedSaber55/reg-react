@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { FiMenu, FiX, FiHome, FiHeart, FiPhone, FiGrid, FiLayers, FiSearch, FiUser, FiChevronDown, FiArrowRight, FiMessageSquare } from 'react-icons/fi';
 import { LanguageSwitcher } from '@/components/common/LanguageSwitcher';
-import { FaBuilding } from 'react-icons/fa';
+import { Building as FaBuilding } from 'lucide-react';
 import { metaPixelEvents, TrackedLink } from '../tracking';
 
 /* ============================================

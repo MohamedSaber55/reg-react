@@ -5,7 +5,7 @@ import { TrackedLink } from '@/components/tracking';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { fetchProjects } from '@/store/slices/projectSlice';
 import { FaBuilding, FaCalendar, FaArrowRight } from 'react-icons/fa6';
-import { FaHome } from 'react-icons/fa';
+import { Home as FaHome } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 export default function FeaturedProjects() {

@@ -1,6 +1,6 @@
 // components/tracking/TrackedContact.jsx
 import { FiPhone, FiMail, FiMapPin } from 'react-icons/fi';
-import { FaWhatsapp } from 'react-icons/fa';
+import { WhatsAppIcon as FaWhatsapp } from '@/components/icons/WhatsAppIcon';
 import { metaPixelEvents } from '@/utils/metaPixelTracking';
 
 /**

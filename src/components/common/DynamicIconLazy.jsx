@@ -1,6 +1,6 @@
 // components/common/DynamicIconLazy.jsx
 import React, { useState, useEffect } from 'react';
-import { FaQuestionCircle } from 'react-icons/fa';
+import { CircleHelp as FaQuestionCircle } from 'lucide-react';
 
 const iconCache = new Map();
 

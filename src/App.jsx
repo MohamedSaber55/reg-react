@@ -12,8 +12,8 @@ import MetaPixelTracker from '@/components/tracking/MetaPixelTracker';
 // Layouts
 import Loading from '@/components/layout/Loading';
 import MainLayout from '@/layouts/MainLayout';
-import DashboardLayout from '@/layouts/DashboardLayout';
-import AuthLayout from '@/layouts/AuthLayout';
+const DashboardLayout = lazy(() => import('@/layouts/DashboardLayout'));
+const AuthLayout = lazy(() => import('@/layouts/AuthLayout'));
 
 // Main pages
 import HomePage from '@/pages/main/HomePage';
